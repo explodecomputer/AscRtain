@@ -25,7 +25,7 @@ suppressWarnings(suppressPackageStartupMessages({
   library(dplyr)
   library(pwr)
 }))
-knitr::opts_chunk$set(echo=TRUE, message=FALSE, warning=FALSE, dev="png", cache=TRUE)
+knitr::opts_chunk$set(echo=TRUE, message=FALSE, warning=FALSE, dev="png")
 ```
 
 The purpose of expanding sample sizes for genome-wide association studies, now happening at a rapid rate with the advent of population scale biobanks, is to detect more and more genetic variants associated with complex traits of interest. With 5 million samples, the effect sizes detectable are extremely small. While this provides exquisite power to detect extremely small effects, it opens up new avenues of subtle bias. One such problem arises because the recruited individuals are not representative of the general population. If they are ascertained, for example for higher education levels, collider bias will induce correlations amongst all the causes of higher education levels within the sample. This problem is typically ignored because the magnitude of the collider bias is relatively small, and unlikely to be detectable at genome-wide significance thresholds. However, with extreme statistical power that safety may disappear.

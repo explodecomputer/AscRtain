@@ -1,19 +1,25 @@
 Package: collider.app
-Title: What the Package Does (One Line, Title Case)
+Title: Examining bias in observational associations due to collider
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "First",
-           family = "Last",
+    person(given = "Gibran",
+           family = "Hemani",
            role = c("aut", "cre"),
-           email = "first.last@example.com",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+           email = "explodecomputer@gmail.com",
+           comment = c(ORCID = "0000-0003-0920-1055"))
+Description: A set of simulation and plotting functions for examining different collider structures on estimates of associations between two variables.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Suggests: 
-    testthat (>= 2.1.0)
+    testthat (>= 2.1.0),
+    rmarkdown
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.0.2
 Imports: 
+	dplyr,
+	ggplot2,
+	pwr,
+	knitr,
     magrittr
+VignetteBuilder: knitr

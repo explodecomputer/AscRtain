@@ -8,13 +8,13 @@
 #' @param b_xy Causal effect of X on Y
 #' @param rsq_xs Variance explained by X on collider variable S
 #' @param rsq_ys Variance explained by Y on collider variable S
-#' @param vx=1 Variance of X
-#' @param vy=1 Variance of Y
-#' @param vs=1 Variance of S
-#' @param sig.level=5e-8 Alpha threshold for power calculation
+#' @param vx Variance of X. Default = 1.
+#' @param vy Variance of Y. Default = 1.
+#' @param vs Variance of S. Default = 1.
+#' @param sig.level Alpha threshold for power calculation. Default = 5e-8
 #'
 #' @export
-#' @return List of 
+#' @return List of simulation results
 simulate_y_structure <- function(n, prop, or_sz, b_xy, rsq_xs, rsq_ys, vx=1, vy=1, vs=1, sig.level=5e-8)
 {
   # infer
@@ -64,23 +64,23 @@ plot_simulate_y_structure <- function(prop, b_xy_thresh, or_sz_range=c(1,100), b
       rsq_xs=seq(rsq_xs_range[1], rsq_xs_range[2], length.out=gran),
       rsq_ys=seq(rsq_ys_range[1], rsq_ys_range[2], length.out=gran),
       bh_xy=NA
-    ) %>% filter(rsq_xs + rsq_ys <=1)
+    ) %>% dplyr::filter(rsq_xs + rsq_ys <=1)
   for(i in 1:nrow(param))
   {
     o <- simulate_y_structure(NA, prop, param$or_sz[i], b_xy, param$rsq_xs[i], param$rsq_ys[i])
     param$bh_xy[i] <- o$bh_xy
   }
     param <- dplyr::mutate(param, thresh = abs(bh_xy) >= abs(b_xy_thresh) & sign(bh_xy) == sign(b_xy_thresh))
-    param2 <- param %>% filter(thresh) %>% 
-      group_by(rsq_xs, rsq_ys) %>%
-      summarise(or_sz = min(or_sz))
+    param2 <- param %>% dplyr::filter_("thresh") %>% 
+      dplyr::group_by_(rsq_xs, rsq_ys) %>%
+      dplyr::summarise(or_sz = min(or_sz))
 
   message("Plotting")
   g <- ggplot2::ggplot(param, ggplot2::aes(x=rsq_xs, y=rsq_ys)) +
     ggplot2::geom_point(colour="grey", size=0.2) +
     ggplot2::geom_point(data=param2, ggplot2::aes(colour=or_sz), size=2) +
-    scale_colour_distiller(palette = "Spectral") +
-    labs(x="Variance in S explained by X", y="Variance in S explained by Y", colour="OR (S->Z)")
+    ggplot2::scale_colour_distiller(palette = "Spectral") +
+    ggplot2::labs(x="Variance in S explained by X", y="Variance in S explained by Y", colour="OR (S->Z)")
   g
 }
 
@@ -106,7 +106,7 @@ plot_simulate_y_structure_optim <- function(prop, b_xy_thresh, b_xy=0, rsq_xs_ra
       rsq_ys=seq(rsq_ys_range[1], rsq_ys_range[2], length.out=gran),
       bh_xy=NA,
       or_sz=NA
-    ) %>% filter(rsq_xs + rsq_ys <=1)
+    ) %>% dplyr::filter(rsq_xs + rsq_ys <=1)
   param$id <- 1:nrow(param)
   fn <- function(x, prop, b_xy, rsq_xs, rsq_ys, b_xy_thresh) {
     o <- simulate_y_structure(NA, prop, x, b_xy, rsq_xs, rsq_ys)
@@ -118,14 +118,14 @@ plot_simulate_y_structure_optim <- function(prop, b_xy_thresh, b_xy=0, rsq_xs_ra
     param$bh_xy[i] <- b_xy_thresh
     param$or_sz[i] <- o$minimum
   }
-    param2 <- param %>% filter(or_sz <= max_or_sz)
+    param2 <- param %>% dplyr::filter(or_sz <= max_or_sz)
     
   message("Plotting")
   g <- ggplot2::ggplot(param %>% subset(., !id %in% param2$id), ggplot2::aes(x=rsq_xs, y=rsq_ys)) +
     ggplot2::geom_point(colour="grey", size=0.2) +
     ggplot2::geom_point(data=param2, ggplot2::aes(colour=or_sz), size=2) +
-    scale_colour_distiller(palette = "Spectral") +
-    labs(x="Variance in S explained by X", y="Variance in S explained by Y", colour="OR of S\non inclusion")
+    ggplot2::scale_colour_distiller(palette = "Spectral") +
+    ggplot2::labs(x="Variance in S explained by X", y="Variance in S explained by Y", colour="OR of S\non inclusion")
   g
 }
 
