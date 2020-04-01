@@ -1,5 +1,5 @@
 Package: collidR
-Title: Examining bias in observational associations due to collider
+Title: Examining bias in observational associations due to colliders
 Version: 0.0.0.9000
 Authors@R: 
     person(given = "Gibran",
