@@ -1,4 +1,4 @@
 library(testthat)
-library(collider.app)
+library(collidR)
 
-test_check("collider.app")
+test_check("collidR")

@@ -118,7 +118,7 @@ plot_simulate_y_structure_optim <- function(prop, b_xy_thresh, b_xy=0, rsq_xs_ra
     param$bh_xy[i] <- b_xy_thresh
     param$or_sz[i] <- o$minimum
   }
-    param2 <- param %>% dplyr::filter(or_sz <= max_or_sz)
+  param$thresh <- param$or_sz <= max_or_sz
     
   message("Plotting")
   g <- ggplot2::ggplot(param %>% subset(., !id %in% param2$id), ggplot2::aes(x=rsq_xs, y=rsq_ys)) +
@@ -128,4 +128,10 @@ plot_simulate_y_structure_optim <- function(prop, b_xy_thresh, b_xy=0, rsq_xs_ra
     ggplot2::labs(x="Variance in S explained by X", y="Variance in S explained by Y", colour="OR of S\non inclusion")
   g
 }
+
+
+
+
+
+
 
