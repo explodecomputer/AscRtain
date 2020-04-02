@@ -1,4 +1,8 @@
+<!-- badges: start -->
 
+  [![Travis build status](https://travis-ci.org/explodecomputer/collidR.svg?branch=master)](https://travis-ci.org/explodecomputer/collidR)
+  [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+  <!-- badges: end -->
 
 **Under development**
 
