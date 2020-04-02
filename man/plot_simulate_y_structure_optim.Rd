@@ -11,7 +11,7 @@ plot_simulate_y_structure_optim(
   rsq_xs_range = c(0, 1),
   rsq_ys_range = c(0, 1),
   gran = 101,
-  max_or_sz = 10
+  max_or_sz = 20
 )
 }
 \arguments{
