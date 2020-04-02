@@ -2,6 +2,7 @@
 
   [![Travis build status](https://travis-ci.org/explodecomputer/collidR.svg?branch=master)](https://travis-ci.org/explodecomputer/collidR)
   [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+  [![codecov](https://codecov.io/github/explodecomputer/collidR/branch/master/graphs/badge.svg)](https://codecov.io/github/explodecomputer/collidR)
   <!-- badges: end -->
 
 **Under development**
