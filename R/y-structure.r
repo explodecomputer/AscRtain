@@ -71,8 +71,8 @@ plot_simulate_y_structure <- function(prop, b_xy_thresh, or_sz_range=c(1,100), b
     param$bh_xy[i] <- o$bh_xy
   }
     param <- dplyr::mutate(param, thresh = abs(bh_xy) >= abs(b_xy_thresh) & sign(bh_xy) == sign(b_xy_thresh))
-    param2 <- param %>% dplyr::filter_("thresh") %>% 
-      dplyr::group_by_(rsq_xs, rsq_ys) %>%
+    param2 <- param %>% dplyr::filter(thresh) %>% 
+      dplyr::group_by(rsq_xs, rsq_ys) %>%
       dplyr::summarise(or_sz = min(or_sz))
 
   message("Plotting")
@@ -98,7 +98,7 @@ plot_simulate_y_structure <- function(prop, b_xy_thresh, or_sz_range=c(1,100), b
 #'
 #' @export
 #' @return ggplot of simulations
-plot_simulate_y_structure_optim <- function(prop, b_xy_thresh, b_xy=0, rsq_xs_range=c(0,1), rsq_ys_range=c(0,1), gran=101, max_or_sz=10)
+plot_simulate_y_structure_optim <- function(prop, b_xy_thresh, b_xy=0, rsq_xs_range=c(0,1), rsq_ys_range=c(0,1), gran=101, max_or_sz=20)
 {
   message("Calculating surface")
   param <- expand.grid(
@@ -121,9 +121,9 @@ plot_simulate_y_structure_optim <- function(prop, b_xy_thresh, b_xy=0, rsq_xs_ra
   param$thresh <- param$or_sz <= max_or_sz
     
   message("Plotting")
-  g <- ggplot2::ggplot(param %>% subset(., !id %in% param2$id), ggplot2::aes(x=rsq_xs, y=rsq_ys)) +
+  g <- ggplot2::ggplot(param %>% subset(., !thresh), ggplot2::aes(x=rsq_xs, y=rsq_ys)) +
     ggplot2::geom_point(colour="grey", size=0.2) +
-    ggplot2::geom_point(data=param2, ggplot2::aes(colour=or_sz), size=2) +
+    ggplot2::geom_point(data=param %>% subset(., thresh), ggplot2::aes(colour=or_sz), size=2) +
     ggplot2::scale_colour_distiller(palette = "Spectral") +
     ggplot2::labs(x="Variance in S explained by X", y="Variance in S explained by Y", colour="OR of S\non inclusion")
   g
