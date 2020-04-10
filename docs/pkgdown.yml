@@ -2,5 +2,6 @@ pandoc: 2.7.3
 pkgdown: 1.4.1
 pkgdown_sha: ~
 articles:
+  binary_collider: binary_collider.html
   collider_ascertainment: collider_ascertainment.html
 

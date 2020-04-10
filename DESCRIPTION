@@ -18,9 +18,12 @@ Suggests:
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.0.2
 Imports: 
+  R6,
 	dplyr,
 	ggplot2,
 	pwr,
 	knitr,
-    magrittr
+  plot3D,
+  magrittr,
+  plot3Drgl
 VignetteBuilder: knitr

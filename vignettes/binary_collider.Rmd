@@ -1,0 +1,95 @@
+---
+title: "Collider bias for binary variables"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Collider bias for binary variables}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(collidR)
+```
+
+Following https://osf.io/vrcuf/, can infer the biased OR for a binary exposure ($A$) on a binary outcome ($Y$) when both of the traits influence the probability of being present in the sample ($S$)
+
+Assume that being present in the sample is simply:
+
+$$
+P(S = 1 | A,Y) = \beta_0 + \beta_A A + \beta_Y Y + \beta_{AY} AY
+$$
+
+where $A = {0,1}$ and $Y = {0,1}$. The expected odds ratio under this scenario is then:
+
+$$
+E[\hat{OR}_{S=1}] = \frac{\beta_0(\beta_0 + \beta_A + \beta_Y + \beta_{AY})}{(\beta_0 + \beta_A)(\beta_0 + \beta_Y)}
+$$
+
+Suppose that we know the fraction of the population that is present in our sample ($p_{S}$). We are only interested in the $\beta_*$ parameter values that give rise to a value of $p_{S}$ that is within the bounds of expectation:
+
+$$
+p_{S} = \beta_0 + \beta_A p_A + \beta_Y p_Y + \beta_{AY} p_{AY}
+$$
+
+Scenario: we find an association between $A$ and $Y$ in our ascertained sample. Our question is what effects must $A$ and $Y$ have on sample ascertainment in order to induce the observed odds ratio $OR$, assuming that the true odds ratio is 1.
+
+Initialise a new `BinaryCollider` class
+
+```{r}
+x <- BinaryCollider$new()
+x
+```
+
+Example of how to calculate the odds ratio for given $\beta_*$ parameters:
+
+```{r}
+x$or_calc(b0=0.1, ba=0.2, by=0.3, bay=0.4)
+```
+
+Search over a parameter space of possible values to identify whether some target odds ratio could be explained by sample ascertainment
+
+```{r}
+x$parameter_space(
+	target_or=2, 
+	pS=0.0275, 
+	pA=0.15,
+	pY=0.1,
+	pAY=0,
+	b0_range=c(0,1), 
+	ba_range=c(-0.2,0.2), 
+	by_range=c(-0.2,0.2), 
+	bay_range=c(0,0), 
+	granularity=100
+)
+```
+
+The parameter values that meet the target OR due to collider bias
+
+```{r}
+x$param
+```
+
+Visualise the distribution of odds ratios found across the range of parameters
+
+```{r}
+x$histogram()
+```
+
+Visualise the $\beta_*$ parameter ranges that meet the target odds ratio
+
+```{r}
+x$scatter3d()
+```
+
+Can try to do this in 3D also:
+
+```{r}
+plot3Drgl::plotrgl()
+```
