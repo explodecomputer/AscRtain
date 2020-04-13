@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Collider bias for binary variables • collidR</title>
+<title>Collider bias for binary variables • AscRtain</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
@@ -30,7 +30,7 @@
         <span class="icon-bar"></span>
       </button>
       <span class="navbar-brand">
-        <a class="navbar-link" href="../index.html">collidR</a>
+        <a class="navbar-link" href="../index.html">AscRtain</a>
         <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
       </span>
     </div>
@@ -88,7 +88,7 @@
 
     
     
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(collidR)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(AscRtain)</span></code></pre></div>
 <p>Following <a href="https://osf.io/vrcuf/" class="uri">https://osf.io/vrcuf/</a>, can infer the biased OR for a binary exposure (<span class="math inline">\(A\)</span>) on a binary outcome (<span class="math inline">\(Y\)</span>) when both of the traits influence the probability of being present in the sample (<span class="math inline">\(S\)</span>)</p>
 <p>Assume that being present in the sample is simply:</p>
 <p><span class="math display">\[
@@ -103,10 +103,10 @@ E[\hat{OR}_{S=1}] = \frac{\beta_0(\beta_0 + \beta_A + \beta_Y + \beta_{AY})}{(\b
 p_{S} = \beta_0 + \beta_A p_A + \beta_Y p_Y + \beta_{AY} p_{AY}
 \]</span></p>
 <p>Scenario: we find an association between <span class="math inline">\(A\)</span> and <span class="math inline">\(Y\)</span> in our ascertained sample. Our question is what effects must <span class="math inline">\(A\)</span> and <span class="math inline">\(Y\)</span> have on sample ascertainment in order to induce the observed odds ratio <span class="math inline">\(OR\)</span>, assuming that the true odds ratio is 1.</p>
-<p>Initialise a new <code>BinaryCollider</code> class</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>x &lt;-<span class="st"> </span>BinaryCollider<span class="op">$</span><span class="kw">new</span>()</span>
+<p>Initialise a new <code>VBB</code> (<strong>V</strong>-structure, <strong>B</strong>inary exposure, <strong>B</strong>inary outcome) class</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>x &lt;-<span class="st"> </span>VBB<span class="op">$</span><span class="kw">new</span>()</span>
 <span id="cb2-2"><a href="#cb2-2"></a>x</span>
-<span id="cb2-3"><a href="#cb2-3"></a><span class="co">#&gt; &lt;BinaryCollider&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="co">#&gt; &lt;VBB&gt;</span></span>
 <span id="cb2-4"><a href="#cb2-4"></a><span class="co">#&gt;   Public:</span></span>
 <span id="cb2-5"><a href="#cb2-5"></a><span class="co">#&gt;     clone: function (deep = FALSE) </span></span>
 <span id="cb2-6"><a href="#cb2-6"></a><span class="co">#&gt;     histogram: function (bins = 30) </span></span>
@@ -114,7 +114,8 @@ p_{S} = \beta_0 + \beta_A p_A + \beta_Y p_Y + \beta_{AY} p_{AY}
 <span id="cb2-8"><a href="#cb2-8"></a><span class="co">#&gt;     param: NULL</span></span>
 <span id="cb2-9"><a href="#cb2-9"></a><span class="co">#&gt;     parameter_space: function (target_or, pS, pA, pY, pAY, b0_range, ba_range, by_range, </span></span>
 <span id="cb2-10"><a href="#cb2-10"></a><span class="co">#&gt;     ps_calc: function (b0, ba, by, bay, pA, pY, pAY) </span></span>
-<span id="cb2-11"><a href="#cb2-11"></a><span class="co">#&gt;     scatter3d: function (ticktype = "detailed", theta = 130, phi = 0, bty = "g",</span></span></code></pre></div>
+<span id="cb2-11"><a href="#cb2-11"></a><span class="co">#&gt;     scatter: function (bins = 30) </span></span>
+<span id="cb2-12"><a href="#cb2-12"></a><span class="co">#&gt;     scatter3d: function (ticktype = "detailed", theta = 130, phi = 0, bty = "g",</span></span></code></pre></div>
 <p>Example of how to calculate the odds ratio for given <span class="math inline">\(\beta_*\)</span> parameters:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>x<span class="op">$</span><span class="kw">or_calc</span>(<span class="dt">b0=</span><span class="fl">0.1</span>, <span class="dt">ba=</span><span class="fl">0.2</span>, <span class="dt">by=</span><span class="fl">0.3</span>, <span class="dt">bay=</span><span class="fl">0.4</span>)</span>
 <span id="cb3-2"><a href="#cb3-2"></a><span class="co">#&gt; [1] 0.8333333</span></span></code></pre></div>
@@ -151,14 +152,59 @@ p_{S} = \beta_0 + \beta_A p_A + \beta_Y p_Y + \beta_{AY} p_{AY}
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>x<span class="op">$</span><span class="kw">histogram</span>()</span></code></pre></div>
 <p><img src="binary_collider_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
 <p>Visualise the <span class="math inline">\(\beta_*\)</span> parameter ranges that meet the target odds ratio</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>x<span class="op">$</span><span class="kw">scatter3d</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>x<span class="op">$</span><span class="kw">scatter</span>()</span></code></pre></div>
 <p><img src="binary_collider_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
+<p>Or in 3D:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>x<span class="op">$</span><span class="kw">scatter3d</span>()</span></code></pre></div>
+<p><img src="binary_collider_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
 <p>Can try to do this in 3D also:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>plot3Drgl<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/plot3Drgl/man/plotrgl.html">plotrgl</a></span>()</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>plot3Drgl<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/plot3Drgl/man/plotrgl.html">plotrgl</a></span>()</span></code></pre></div>
+<div id="check-the-results-through-simulation" class="section level2">
+<h2 class="hasAnchor">
+<a href="#check-the-results-through-simulation" class="anchor"></a>Check the results through simulation</h2>
+<p>Here, <span class="math inline">\(A\)</span> is ACE inhibitor use, <span class="math inline">\(Y\)</span> is Covid-19 status, and <span class="math inline">\(S\)</span> is presence in the first release of the COVID Symptom Tracker dataset.</p>
+<p>Observational association of ACE-i influence on Covid-19 status gives OR <span class="math inline">\(\approx 2\)</span>. Assume 15% of population take ACE-i, 10% are infected with coronavirus at the time of sampling, 1.9 million of an adult population of 54 million are present in the sample (3.5%). What influences of ACE-inhibitor use and Covid-19 status would be required to induce a collider bias of <span class="math inline">\(OR=2\)</span>?</p>
+<p>Enter parameters:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>x &lt;-<span class="st"> </span>VBB<span class="op">$</span><span class="kw">new</span>()</span>
+<span id="cb10-2"><a href="#cb10-2"></a>x<span class="op">$</span><span class="kw">parameter_space</span>(</span>
+<span id="cb10-3"><a href="#cb10-3"></a>    <span class="dt">target_or=</span><span class="dv">2</span>, </span>
+<span id="cb10-4"><a href="#cb10-4"></a>    <span class="dt">pS=</span><span class="fl">0.035</span>, </span>
+<span id="cb10-5"><a href="#cb10-5"></a>    <span class="dt">pA=</span><span class="fl">0.15</span>,</span>
+<span id="cb10-6"><a href="#cb10-6"></a>    <span class="dt">pY=</span><span class="fl">0.1</span>,</span>
+<span id="cb10-7"><a href="#cb10-7"></a>    <span class="dt">pAY=</span><span class="dv">0</span>,</span>
+<span id="cb10-8"><a href="#cb10-8"></a>    <span class="dt">b0_range=</span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">0</span>,<span class="dv">1</span>), </span>
+<span id="cb10-9"><a href="#cb10-9"></a>    <span class="dt">ba_range=</span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="op">-</span><span class="fl">0.2</span>,<span class="fl">0.2</span>), </span>
+<span id="cb10-10"><a href="#cb10-10"></a>    <span class="dt">by_range=</span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="op">-</span><span class="fl">0.2</span>,<span class="fl">0.2</span>), </span>
+<span id="cb10-11"><a href="#cb10-11"></a>    <span class="dt">bay_range=</span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">0</span>,<span class="dv">0</span>), </span>
+<span id="cb10-12"><a href="#cb10-12"></a>    <span class="dt">granularity=</span><span class="dv">100</span></span>
+<span id="cb10-13"><a href="#cb10-13"></a>)</span>
+<span id="cb10-14"><a href="#cb10-14"></a>x<span class="op">$</span><span class="kw">scatter3d</span>()</span></code></pre></div>
+<p><img src="binary_collider_files/figure-html/unnamed-chunk-10-1.png" width="700"></p>
+<p>Simulate individual level data according to the first result, where <span class="math inline">\(A\)</span> has no influence on <span class="math inline">\(Y\)</span>. Note that using a population size of 1 million as the sample size doesn’t matter, just the proportion sampled.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>a &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/subset.html">subset</a></span>(x<span class="op">$</span>param, <span class="kw"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span>(by) <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.1</span> <span class="op">&amp;</span><span class="st"> </span>b0 <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.02</span>)[<span class="dv">1</span>,]</span>
+<span id="cb11-2"><a href="#cb11-2"></a>n &lt;-<span class="st"> </span><span class="dv">1000000</span></span>
+<span id="cb11-3"><a href="#cb11-3"></a>Y &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/Binomial.html">rbinom</a></span>(n, <span class="dv">1</span>, a<span class="op">$</span>pY)</span>
+<span id="cb11-4"><a href="#cb11-4"></a>A &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/Binomial.html">rbinom</a></span>(n, <span class="dv">1</span>, a<span class="op">$</span>pA)</span>
+<span id="cb11-5"><a href="#cb11-5"></a>pS &lt;-<span class="st"> </span>a<span class="op">$</span>b0 <span class="op">+</span><span class="st"> </span>a<span class="op">$</span>ba <span class="op">*</span><span class="st"> </span>A <span class="op">+</span><span class="st"> </span>a<span class="op">$</span>by <span class="op">*</span><span class="st"> </span>Y</span>
+<span id="cb11-6"><a href="#cb11-6"></a>S &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/Binomial.html">rbinom</a></span>(n, <span class="dv">1</span>, pS)</span></code></pre></div>
+<p>What proportion of the population are present in the sample?</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="kw"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(S) <span class="op">/</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(S)</span>
+<span id="cb12-2"><a href="#cb12-2"></a><span class="co">#&gt; [1] 0.032824</span></span></code></pre></div>
+<p>Estimate association between <code>A</code> and <code>Y</code></p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="kw"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="kw"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span>(Y[<span class="kw"><a href="https://rdrr.io/r/base/logical.html">as.logical</a></span>(S)] <span class="op">~</span><span class="st"> </span>A[<span class="kw"><a href="https://rdrr.io/r/base/logical.html">as.logical</a></span>(S)], <span class="dt">family=</span><span class="st">"binomial"</span>))<span class="op">$</span>coef[<span class="dv">2</span>,<span class="dv">1</span>] <span class="op">%&gt;%</span><span class="st"> </span>exp</span>
+<span id="cb13-2"><a href="#cb13-2"></a><span class="co">#&gt; [1] 2.267472</span></span></code></pre></div>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
 
+        <div id="tocnav">
+      <h2 class="hasAnchor">
+<a href="#tocnav" class="anchor"></a>Contents</h2>
+      <ul class="nav nav-pills nav-stacked">
+<li><a href="#check-the-results-through-simulation">Check the results through simulation</a></li>
+      </ul>
+</div>
       </div>
 
 </div>

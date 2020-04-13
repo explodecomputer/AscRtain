@@ -1,5 +1,5 @@
-Package: collidR
-Title: Examining bias in observational associations due to colliders
+Package: AscRtain
+Title: Examining bias in observational associations due to sampling ascertainment
 Version: 0.0.0.9000
 Authors@R: 
     person(given = "Gibran",

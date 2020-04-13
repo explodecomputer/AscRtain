@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ascertainment on a collider • collidR</title>
+<title>Ascertainment on a collider • AscRtain</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
@@ -30,7 +30,7 @@
         <span class="icon-bar"></span>
       </button>
       <span class="navbar-brand">
-        <a class="navbar-link" href="../index.html">collidR</a>
+        <a class="navbar-link" href="../index.html">AscRtain</a>
         <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9000</span>
       </span>
     </div>
@@ -161,19 +161,19 @@ p = \frac{1}{1 + e^{-\alpha}}
 <span id="cb2-10"><a href="#cb2-10"></a>z &lt;-<span class="st"> </span>s <span class="op">*</span><span class="st"> </span>b_sz <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(n)</span></code></pre></div>
 <p>Bias in x-y assoc when conditioning on s</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>(b_xy <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(s) <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(x) <span class="op">-</span><span class="st"> </span>b_xs <span class="op">*</span><span class="st"> </span>b_ys <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(x) <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(y)) <span class="op">/</span><span class="st"> </span>(b_ys<span class="op">^</span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(x) <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(y) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(x))</span>
-<span id="cb3-2"><a href="#cb3-2"></a><span class="co">#&gt; [1] -0.7385189</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="co">#&gt; [1] -0.738438</span></span>
 <span id="cb3-3"><a href="#cb3-3"></a><span class="kw"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(y <span class="op">~</span><span class="st"> </span>x <span class="op">+</span><span class="st"> </span>s)<span class="op">$</span>coef[<span class="dv">2</span>]</span>
 <span id="cb3-4"><a href="#cb3-4"></a><span class="co">#&gt;          x </span></span>
-<span id="cb3-5"><a href="#cb3-5"></a><span class="co">#&gt; -0.7383446</span></span></code></pre></div>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="co">#&gt; -0.7381207</span></span></code></pre></div>
 <p>Bias in x-y assoc when conditioning on z</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>b_xz &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(z <span class="op">~</span><span class="st"> </span>x)<span class="op">$</span>coef[<span class="dv">2</span>]</span>
 <span id="cb4-2"><a href="#cb4-2"></a>b_yz &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(z <span class="op">~</span><span class="st"> </span>y)<span class="op">$</span>coef[<span class="dv">2</span>]</span>
 <span id="cb4-3"><a href="#cb4-3"></a>(b_xy <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(z) <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(x) <span class="op">-</span><span class="st"> </span>b_xz <span class="op">*</span><span class="st"> </span>b_yz <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(x) <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(y)) <span class="op">/</span><span class="st"> </span>(b_yz<span class="op">^</span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(x) <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(y) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(x))</span>
-<span id="cb4-4"><a href="#cb4-4"></a><span class="co">#&gt;         x </span></span>
-<span id="cb4-5"><a href="#cb4-5"></a><span class="co">#&gt; -0.750152</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a><span class="co">#&gt;          x </span></span>
+<span id="cb4-5"><a href="#cb4-5"></a><span class="co">#&gt; -0.7502075</span></span>
 <span id="cb4-6"><a href="#cb4-6"></a><span class="kw"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(y <span class="op">~</span><span class="st"> </span>x <span class="op">+</span><span class="st"> </span>z)<span class="op">$</span>coef[<span class="dv">2</span>]</span>
 <span id="cb4-7"><a href="#cb4-7"></a><span class="co">#&gt;          x </span></span>
-<span id="cb4-8"><a href="#cb4-8"></a><span class="co">#&gt; -0.7380979</span></span></code></pre></div>
+<span id="cb4-8"><a href="#cb4-8"></a><span class="co">#&gt; -0.7378427</span></span></code></pre></div>
 <p>Is the same.. why?</p>
 <p>Now make x binary. This also changes its mean and variance. Change y variance also</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>n &lt;-<span class="st"> </span><span class="dv">100000</span></span>
@@ -184,19 +184,19 @@ p = \frac{1}{1 + e^{-\alpha}}
 <span id="cb5-6"><a href="#cb5-6"></a>z &lt;-<span class="st"> </span>s <span class="op">*</span><span class="st"> </span><span class="dv">5</span> <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(n)</span></code></pre></div>
 <p>Bias in x-y assoc when conditioning on s</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>(b_xy <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(s) <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(x) <span class="op">-</span><span class="st"> </span>b_xs <span class="op">*</span><span class="st"> </span>b_ys <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(x) <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(y)) <span class="op">/</span><span class="st"> </span>(b_ys<span class="op">^</span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(x) <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(y) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(x))</span>
-<span id="cb6-2"><a href="#cb6-2"></a><span class="co">#&gt; [1] -0.7487017</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="co">#&gt; [1] -0.7487079</span></span>
 <span id="cb6-3"><a href="#cb6-3"></a><span class="kw"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(y <span class="op">~</span><span class="st"> </span>x <span class="op">+</span><span class="st"> </span>s)<span class="op">$</span>coef[<span class="dv">2</span>]</span>
 <span id="cb6-4"><a href="#cb6-4"></a><span class="co">#&gt;          x </span></span>
-<span id="cb6-5"><a href="#cb6-5"></a><span class="co">#&gt; -0.7490438</span></span></code></pre></div>
+<span id="cb6-5"><a href="#cb6-5"></a><span class="co">#&gt; -0.7485414</span></span></code></pre></div>
 <p>Bias in x-y assoc when conditioning on z</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>b_xz &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(z <span class="op">~</span><span class="st"> </span>x)<span class="op">$</span>coef[<span class="dv">2</span>]</span>
 <span id="cb7-2"><a href="#cb7-2"></a>b_yz &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(z <span class="op">~</span><span class="st"> </span>y)<span class="op">$</span>coef[<span class="dv">2</span>]</span>
 <span id="cb7-3"><a href="#cb7-3"></a>(b_xy <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(z) <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(x) <span class="op">-</span><span class="st"> </span>b_xz <span class="op">*</span><span class="st"> </span>b_yz <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(x) <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(y)) <span class="op">/</span><span class="st"> </span>(b_yz<span class="op">^</span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(x) <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(y) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(x))</span>
 <span id="cb7-4"><a href="#cb7-4"></a><span class="co">#&gt;          x </span></span>
-<span id="cb7-5"><a href="#cb7-5"></a><span class="co">#&gt; -0.7654505</span></span>
+<span id="cb7-5"><a href="#cb7-5"></a><span class="co">#&gt; -0.7454639</span></span>
 <span id="cb7-6"><a href="#cb7-6"></a><span class="kw"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(y <span class="op">~</span><span class="st"> </span>x <span class="op">+</span><span class="st"> </span>z)<span class="op">$</span>coef[<span class="dv">2</span>]</span>
-<span id="cb7-7"><a href="#cb7-7"></a><span class="co">#&gt;          x </span></span>
-<span id="cb7-8"><a href="#cb7-8"></a><span class="co">#&gt; -0.7488433</span></span></code></pre></div>
+<span id="cb7-7"><a href="#cb7-7"></a><span class="co">#&gt;         x </span></span>
+<span id="cb7-8"><a href="#cb7-8"></a><span class="co">#&gt; -0.748258</span></span></code></pre></div>
 <p>Now make z binary</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>x &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/Binomial.html">rbinom</a></span>(n, <span class="dv">2</span>, maf)</span>
 <span id="cb8-2"><a href="#cb8-2"></a>y &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(n)</span>
@@ -207,22 +207,22 @@ p = \frac{1}{1 + e^{-\alpha}}
 <span id="cb8-7"><a href="#cb8-7"></a><span class="kw"><a href="https://rdrr.io/r/base/table.html">table</a></span>(z)</span>
 <span id="cb8-8"><a href="#cb8-8"></a><span class="co">#&gt; z</span></span>
 <span id="cb8-9"><a href="#cb8-9"></a><span class="co">#&gt;     0     1 </span></span>
-<span id="cb8-10"><a href="#cb8-10"></a><span class="co">#&gt; 34572 65428</span></span></code></pre></div>
+<span id="cb8-10"><a href="#cb8-10"></a><span class="co">#&gt; 34842 65158</span></span></code></pre></div>
 <p>Condition on z</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>b_xz &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(z <span class="op">~</span><span class="st"> </span>x)<span class="op">$</span>coef[<span class="dv">2</span>]</span>
 <span id="cb9-2"><a href="#cb9-2"></a>b_yz &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(z <span class="op">~</span><span class="st"> </span>y)<span class="op">$</span>coef[<span class="dv">2</span>]</span>
 <span id="cb9-3"><a href="#cb9-3"></a>(b_xy <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(z) <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(x) <span class="op">-</span><span class="st"> </span>b_xz <span class="op">*</span><span class="st"> </span>b_yz <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(x) <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(y)) <span class="op">/</span><span class="st"> </span>(b_yz<span class="op">^</span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(x) <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(y) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(x)<span class="op">*</span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(z))</span>
 <span id="cb9-4"><a href="#cb9-4"></a><span class="co">#&gt;          x </span></span>
-<span id="cb9-5"><a href="#cb9-5"></a><span class="co">#&gt; -0.2354523</span></span>
+<span id="cb9-5"><a href="#cb9-5"></a><span class="co">#&gt; -0.2382258</span></span>
 <span id="cb9-6"><a href="#cb9-6"></a>(b_xy <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(z) <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(x) <span class="op">-</span><span class="st"> </span>b_xz <span class="op">*</span><span class="st"> </span>b_yz <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(x) <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(y)) <span class="op">/</span><span class="st"> </span>(b_yz<span class="op">^</span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(x) <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(y) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(x))</span>
 <span id="cb9-7"><a href="#cb9-7"></a><span class="co">#&gt;           x </span></span>
-<span id="cb9-8"><a href="#cb9-8"></a><span class="co">#&gt; -0.07146795</span></span>
+<span id="cb9-8"><a href="#cb9-8"></a><span class="co">#&gt; -0.07250723</span></span>
 <span id="cb9-9"><a href="#cb9-9"></a><span class="kw"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(y <span class="op">~</span><span class="st"> </span>x <span class="op">+</span><span class="st"> </span>z)<span class="op">$</span>coef[<span class="dv">2</span>]</span>
 <span id="cb9-10"><a href="#cb9-10"></a><span class="co">#&gt;          x </span></span>
-<span id="cb9-11"><a href="#cb9-11"></a><span class="co">#&gt; -0.3942924</span></span>
+<span id="cb9-11"><a href="#cb9-11"></a><span class="co">#&gt; -0.3950582</span></span>
 <span id="cb9-12"><a href="#cb9-12"></a><span class="kw"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(y[z<span class="op">==</span><span class="dv">1</span>] <span class="op">~</span><span class="st"> </span>x[z<span class="op">==</span><span class="dv">1</span>])<span class="op">$</span>coef[<span class="dv">2</span>]</span>
 <span id="cb9-13"><a href="#cb9-13"></a><span class="co">#&gt;  x[z == 1] </span></span>
-<span id="cb9-14"><a href="#cb9-14"></a><span class="co">#&gt; -0.3472432</span></span></code></pre></div>
+<span id="cb9-14"><a href="#cb9-14"></a><span class="co">#&gt; -0.3525667</span></span></code></pre></div>
 <p>Now it’s weird because it seems to need the var(z) term in the denominator.. compare different methods:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(dplyr)</span>
 <span id="cb10-2"><a href="#cb10-2"></a>param &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/expand.grid.html">expand.grid</a></span>(</span>
@@ -263,11 +263,11 @@ p = \frac{1}{1 + e^{-\alpha}}
 <p><img src="collider_ascertainment_files/figure-html/unnamed-chunk-11-1.png" width="700"></p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="kw"><a href="https://rdrr.io/r/base/subset.html">subset</a></span>(out, <span class="dt">select=</span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(est1, est2, est3, est4, est5)) <span class="op">%&gt;%</span><span class="st"> </span>cor</span>
 <span id="cb11-2"><a href="#cb11-2"></a><span class="co">#&gt;           est1      est2      est3      est4      est5</span></span>
-<span id="cb11-3"><a href="#cb11-3"></a><span class="co">#&gt; est1 1.0000000 0.9622286 0.8816883 0.9741076 0.9631486</span></span>
-<span id="cb11-4"><a href="#cb11-4"></a><span class="co">#&gt; est2 0.9622286 1.0000000 0.8543828 0.9568172 0.9521653</span></span>
-<span id="cb11-5"><a href="#cb11-5"></a><span class="co">#&gt; est3 0.8816883 0.8543828 1.0000000 0.9130736 0.9043384</span></span>
-<span id="cb11-6"><a href="#cb11-6"></a><span class="co">#&gt; est4 0.9741076 0.9568172 0.9130736 1.0000000 0.9924954</span></span>
-<span id="cb11-7"><a href="#cb11-7"></a><span class="co">#&gt; est5 0.9631486 0.9521653 0.9043384 0.9924954 1.0000000</span></span></code></pre></div>
+<span id="cb11-3"><a href="#cb11-3"></a><span class="co">#&gt; est1 1.0000000 0.9629335 0.8748378 0.9774858 0.9651346</span></span>
+<span id="cb11-4"><a href="#cb11-4"></a><span class="co">#&gt; est2 0.9629335 1.0000000 0.8416224 0.9587403 0.9539705</span></span>
+<span id="cb11-5"><a href="#cb11-5"></a><span class="co">#&gt; est3 0.8748378 0.8416224 1.0000000 0.9077582 0.8937253</span></span>
+<span id="cb11-6"><a href="#cb11-6"></a><span class="co">#&gt; est4 0.9774858 0.9587403 0.9077582 1.0000000 0.9888952</span></span>
+<span id="cb11-7"><a href="#cb11-7"></a><span class="co">#&gt; est5 0.9651346 0.9539705 0.8937253 0.9888952 1.0000000</span></span></code></pre></div>
 <p>Ok just use the original version in Groenwold 2020, it has the best correlation across parameters with the actual conditioning method.</p>
 <div id="substituting-in-simulation-terms" class="section level2">
 <h2 class="hasAnchor">
@@ -288,30 +288,30 @@ cov(X,Z) = cov(X,\beta S)
 <span id="cb12-7"><a href="#cb12-7"></a><span class="kw"><a href="https://rdrr.io/r/base/table.html">table</a></span>(z)</span>
 <span id="cb12-8"><a href="#cb12-8"></a><span class="co">#&gt; z</span></span>
 <span id="cb12-9"><a href="#cb12-9"></a><span class="co">#&gt;     0     1 </span></span>
-<span id="cb12-10"><a href="#cb12-10"></a><span class="co">#&gt; 34472 65528</span></span>
+<span id="cb12-10"><a href="#cb12-10"></a><span class="co">#&gt; 34602 65398</span></span>
 <span id="cb12-11"><a href="#cb12-11"></a>b_xz &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(z <span class="op">~</span><span class="st"> </span>x)<span class="op">$</span>coef[<span class="dv">2</span>]</span>
 <span id="cb12-12"><a href="#cb12-12"></a>b_yz &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(z <span class="op">~</span><span class="st"> </span>y)<span class="op">$</span>coef[<span class="dv">2</span>]</span>
 <span id="cb12-13"><a href="#cb12-13"></a>(b_xy <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(z) <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(x) <span class="op">-</span><span class="st"> </span>b_xz <span class="op">*</span><span class="st"> </span>b_yz <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(x) <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(y)) <span class="op">/</span><span class="st"> </span>(b_yz<span class="op">^</span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(x) <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(y) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(x)<span class="op">*</span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(z))</span>
-<span id="cb12-14"><a href="#cb12-14"></a><span class="co">#&gt;         x </span></span>
-<span id="cb12-15"><a href="#cb12-15"></a><span class="co">#&gt; -0.233584</span></span>
+<span id="cb12-14"><a href="#cb12-14"></a><span class="co">#&gt;          x </span></span>
+<span id="cb12-15"><a href="#cb12-15"></a><span class="co">#&gt; -0.2350938</span></span>
 <span id="cb12-16"><a href="#cb12-16"></a>(b_xy <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(z) <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(x) <span class="op">-</span><span class="st"> </span>b_xz <span class="op">*</span><span class="st"> </span>b_yz <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(x) <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(y)) <span class="op">/</span><span class="st"> </span>(b_yz<span class="op">^</span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(x) <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(y) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(x))</span>
 <span id="cb12-17"><a href="#cb12-17"></a><span class="co">#&gt;           x </span></span>
-<span id="cb12-18"><a href="#cb12-18"></a><span class="co">#&gt; -0.07081798</span></span>
+<span id="cb12-18"><a href="#cb12-18"></a><span class="co">#&gt; -0.07137833</span></span>
 <span id="cb12-19"><a href="#cb12-19"></a><span class="kw"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(y <span class="op">~</span><span class="st"> </span>x <span class="op">+</span><span class="st"> </span>z)<span class="op">$</span>coef[<span class="dv">2</span>]</span>
-<span id="cb12-20"><a href="#cb12-20"></a><span class="co">#&gt;          x </span></span>
-<span id="cb12-21"><a href="#cb12-21"></a><span class="co">#&gt; -0.3972949</span></span>
+<span id="cb12-20"><a href="#cb12-20"></a><span class="co">#&gt;         x </span></span>
+<span id="cb12-21"><a href="#cb12-21"></a><span class="co">#&gt; -0.396602</span></span>
 <span id="cb12-22"><a href="#cb12-22"></a><span class="kw"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(y[z<span class="op">==</span><span class="dv">1</span>] <span class="op">~</span><span class="st"> </span>x[z<span class="op">==</span><span class="dv">1</span>])<span class="op">$</span>coef[<span class="dv">2</span>]</span>
 <span id="cb12-23"><a href="#cb12-23"></a><span class="co">#&gt;  x[z == 1] </span></span>
-<span id="cb12-24"><a href="#cb12-24"></a><span class="co">#&gt; -0.3543226</span></span></code></pre></div>
+<span id="cb12-24"><a href="#cb12-24"></a><span class="co">#&gt; -0.3538702</span></span></code></pre></div>
 <p>Obtain <span class="math inline">\(\beta_{yz}\)</span> in terms of <span class="math inline">\(\beta_{ys}\)</span> and <span class="math inline">\(\beta_{sz}\)</span></p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>b_xs =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">cov</a></span>(x,s)<span class="op">/</span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(x)</span>
 <span id="cb13-2"><a href="#cb13-2"></a>b_ys =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">cov</a></span>(y,s)<span class="op">/</span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(y)</span>
 <span id="cb13-3"><a href="#cb13-3"></a>b_sz =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">cov</a></span>(s,z)<span class="op">/</span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(s)</span>
 <span id="cb13-4"><a href="#cb13-4"></a>(b_xy <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(z) <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(x) <span class="op">-</span><span class="st"> </span>b_xz <span class="op">*</span><span class="st"> </span>b_yz <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(x) <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(y)) <span class="op">/</span><span class="st"> </span>(b_yz<span class="op">^</span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(x) <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(y) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(x)<span class="op">*</span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(z))</span>
-<span id="cb13-5"><a href="#cb13-5"></a><span class="co">#&gt;         x </span></span>
-<span id="cb13-6"><a href="#cb13-6"></a><span class="co">#&gt; -0.233584</span></span>
+<span id="cb13-5"><a href="#cb13-5"></a><span class="co">#&gt;          x </span></span>
+<span id="cb13-6"><a href="#cb13-6"></a><span class="co">#&gt; -0.2350938</span></span>
 <span id="cb13-7"><a href="#cb13-7"></a>(b_xy <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(z) <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(x) <span class="op">-</span><span class="st"> </span>b_xs <span class="op">*</span><span class="st"> </span>b_sz <span class="op">*</span><span class="st"> </span>b_ys <span class="op">*</span><span class="st"> </span>b_sz <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(x) <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(y)) <span class="op">/</span><span class="st"> </span>((b_ys <span class="op">*</span><span class="st"> </span>b_sz)<span class="op">^</span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(x) <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(y) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(x)<span class="op">*</span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(z))</span>
-<span id="cb13-8"><a href="#cb13-8"></a><span class="co">#&gt; [1] -0.2420922</span></span></code></pre></div>
+<span id="cb13-8"><a href="#cb13-8"></a><span class="co">#&gt; [1] -0.2430781</span></span></code></pre></div>
 <p>Present b_sz in terms of OR in logistic regression model</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>x &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/Binomial.html">rbinom</a></span>(n, <span class="dv">2</span>, maf)</span>
 <span id="cb14-2"><a href="#cb14-2"></a>y &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(n)</span>
@@ -333,25 +333,25 @@ cov(X,Z) = cov(X,\beta S)
 <span id="cb14-18"><a href="#cb14-18"></a><span class="co"># get beta from logOR</span></span>
 <span id="cb14-19"><a href="#cb14-19"></a>logor <span class="op">*</span><span class="st"> </span>mu</span>
 <span id="cb14-20"><a href="#cb14-20"></a><span class="co">#&gt;          s </span></span>
-<span id="cb14-21"><a href="#cb14-21"></a><span class="co">#&gt; 0.01015155</span></span>
+<span id="cb14-21"><a href="#cb14-21"></a><span class="co">#&gt; 0.01020852</span></span>
 <span id="cb14-22"><a href="#cb14-22"></a><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">cov</a></span>(s,z)<span class="op">/</span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(s)</span>
-<span id="cb14-23"><a href="#cb14-23"></a><span class="co">#&gt; [1] 0.009838313</span></span>
+<span id="cb14-23"><a href="#cb14-23"></a><span class="co">#&gt; [1] 0.009888037</span></span>
 <span id="cb14-24"><a href="#cb14-24"></a></span>
 <span id="cb14-25"><a href="#cb14-25"></a><span class="kw"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(y[z<span class="op">==</span><span class="dv">1</span>] <span class="op">~</span><span class="st"> </span>x[z<span class="op">==</span><span class="dv">1</span>])<span class="op">$</span>coef[<span class="dv">2</span>]</span>
 <span id="cb14-26"><a href="#cb14-26"></a><span class="co">#&gt;   x[z == 1] </span></span>
-<span id="cb14-27"><a href="#cb14-27"></a><span class="co">#&gt; -0.01976491</span></span>
+<span id="cb14-27"><a href="#cb14-27"></a><span class="co">#&gt; -0.01077912</span></span>
 <span id="cb14-28"><a href="#cb14-28"></a>b_xs =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">cov</a></span>(x,s)<span class="op">/</span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(x)</span>
 <span id="cb14-29"><a href="#cb14-29"></a>b_ys =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">cov</a></span>(y,s)<span class="op">/</span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(y)</span>
 <span id="cb14-30"><a href="#cb14-30"></a>b_sz =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">cov</a></span>(s,z)<span class="op">/</span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(s)</span>
 <span id="cb14-31"><a href="#cb14-31"></a></span>
 <span id="cb14-32"><a href="#cb14-32"></a>(b_xy <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(z) <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(x) <span class="op">-</span><span class="st"> </span>b_xz <span class="op">*</span><span class="st"> </span>b_yz <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(x) <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(y)) <span class="op">/</span><span class="st"> </span>(b_yz<span class="op">^</span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(x) <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(y) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(x)<span class="op">*</span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(z))</span>
 <span id="cb14-33"><a href="#cb14-33"></a><span class="co">#&gt;           x </span></span>
-<span id="cb14-34"><a href="#cb14-34"></a><span class="co">#&gt; -0.01772751</span></span>
+<span id="cb14-34"><a href="#cb14-34"></a><span class="co">#&gt; -0.01772174</span></span>
 <span id="cb14-35"><a href="#cb14-35"></a>(b_xy <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(z) <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(x) <span class="op">-</span><span class="st"> </span>b_xs <span class="op">*</span><span class="st"> </span>b_sz <span class="op">*</span><span class="st"> </span>b_ys <span class="op">*</span><span class="st"> </span>b_sz <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(x) <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(y)) <span class="op">/</span><span class="st"> </span>((b_ys <span class="op">*</span><span class="st"> </span>b_sz)<span class="op">^</span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(x) <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(y) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(x)<span class="op">*</span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(z))</span>
-<span id="cb14-36"><a href="#cb14-36"></a><span class="co">#&gt; [1] -0.01775592</span></span>
+<span id="cb14-36"><a href="#cb14-36"></a><span class="co">#&gt; [1] -0.01837018</span></span>
 <span id="cb14-37"><a href="#cb14-37"></a>(b_xy <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(z) <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(x) <span class="op">-</span><span class="st"> </span>b_xs <span class="op">*</span><span class="st"> </span>logor <span class="op">*</span><span class="st"> </span>mu <span class="op">*</span><span class="st"> </span>b_ys <span class="op">*</span><span class="st"> </span>logor <span class="op">*</span><span class="st"> </span>mu <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(x) <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(y)) <span class="op">/</span><span class="st"> </span>((b_ys <span class="op">*</span><span class="st"> </span>logor <span class="op">*</span><span class="st"> </span>mu)<span class="op">^</span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(x) <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(y) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(x)<span class="op">*</span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(z))</span>
 <span id="cb14-38"><a href="#cb14-38"></a><span class="co">#&gt;           s </span></span>
-<span id="cb14-39"><a href="#cb14-39"></a><span class="co">#&gt; -0.01887516</span></span></code></pre></div>
+<span id="cb14-39"><a href="#cb14-39"></a><span class="co">#&gt; -0.01954872</span></span></code></pre></div>
 <p>Quick recap:</p>
 <p>$$ \begin{aligned} <em>{xy|s} &amp;=  \ </em>{xy|z} &amp;=  \</p>
 <p>\end{aligned} $$</p>
@@ -378,11 +378,11 @@ V_S &amp;= \frac{2\beta^2_{SX} m(1-m) + \beta^2_{SY}Var(Y)}{R^2_S}
 <span id="cb15-12"><a href="#cb15-12"></a>ve &lt;-<span class="st"> </span>vs <span class="op">-</span><span class="st"> </span>b_gs<span class="op">^</span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="dv">2</span><span class="op">*</span>maf<span class="op">*</span>(<span class="dv">1</span><span class="op">-</span>maf) <span class="op">-</span><span class="st"> </span>b_xs<span class="op">^</span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>vx</span>
 <span id="cb15-13"><a href="#cb15-13"></a>s &lt;-<span class="st"> </span>g <span class="op">*</span><span class="st"> </span>b_gs <span class="op">+</span><span class="st"> </span>x <span class="op">*</span><span class="st"> </span>b_xs <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(n, <span class="dt">sd=</span><span class="kw"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span>(ve))</span>
 <span id="cb15-14"><a href="#cb15-14"></a><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(s)</span>
-<span id="cb15-15"><a href="#cb15-15"></a><span class="co">#&gt; [1] 0.9761626</span></span>
+<span id="cb15-15"><a href="#cb15-15"></a><span class="co">#&gt; [1] 0.995636</span></span>
 <span id="cb15-16"><a href="#cb15-16"></a><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span>(g, s)<span class="op">^</span><span class="dv">2</span></span>
-<span id="cb15-17"><a href="#cb15-17"></a><span class="co">#&gt; [1] 0.1074917</span></span>
+<span id="cb15-17"><a href="#cb15-17"></a><span class="co">#&gt; [1] 0.0991945</span></span>
 <span id="cb15-18"><a href="#cb15-18"></a><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span>(x, s)<span class="op">^</span><span class="dv">2</span></span>
-<span id="cb15-19"><a href="#cb15-19"></a><span class="co">#&gt; [1] 0.1862991</span></span></code></pre></div>
+<span id="cb15-19"><a href="#cb15-19"></a><span class="co">#&gt; [1] 0.1905009</span></span></code></pre></div>
 <p><span class="math display">\[
 \beta_{GS} = \sqrt{\frac{R^2_{GS} Var(S)}{2m(1-m)}}
 \]</span> and</p>
@@ -419,19 +419,19 @@ e_i \sim N\left(0, Var(S) - \beta_{XS}^2 Var(X) - 2 \beta_{GS}^2 m(1-m) \right)
 <span id="cb16-23"><a href="#cb16-23"></a>x &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/Binomial.html">rbinom</a></span>(n, <span class="dv">2</span>, maf)</span>
 <span id="cb16-24"><a href="#cb16-24"></a>s &lt;-<span class="st"> </span>x <span class="op">*</span><span class="st"> </span>b_xs <span class="op">+</span><span class="st"> </span>y <span class="op">*</span><span class="st"> </span>b_ys <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span>(n, <span class="dt">sd=</span><span class="kw"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span>(ve))</span>
 <span id="cb16-25"><a href="#cb16-25"></a><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span>(s,x)<span class="op">^</span><span class="dv">2</span></span>
-<span id="cb16-26"><a href="#cb16-26"></a><span class="co">#&gt; [1] 0.05001659</span></span>
+<span id="cb16-26"><a href="#cb16-26"></a><span class="co">#&gt; [1] 0.04959428</span></span>
 <span id="cb16-27"><a href="#cb16-27"></a><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span>(s,y)<span class="op">^</span><span class="dv">2</span></span>
-<span id="cb16-28"><a href="#cb16-28"></a><span class="co">#&gt; [1] 0.09789905</span></span>
+<span id="cb16-28"><a href="#cb16-28"></a><span class="co">#&gt; [1] 0.1025353</span></span>
 <span id="cb16-29"><a href="#cb16-29"></a>l &lt;-<span class="st"> </span>alpha <span class="op">+</span><span class="st"> </span>logor_sz <span class="op">*</span><span class="st"> </span>s</span>
 <span id="cb16-30"><a href="#cb16-30"></a>pr &lt;-<span class="st"> </span><span class="dv">1</span> <span class="op">/</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/Log.html">exp</a></span>(<span class="op">-</span>l))</span>
 <span id="cb16-31"><a href="#cb16-31"></a>z &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/Binomial.html">rbinom</a></span>(n, <span class="dv">1</span>, pr)</span>
 <span id="cb16-32"><a href="#cb16-32"></a></span>
 <span id="cb16-33"><a href="#cb16-33"></a><span class="co"># infer</span></span>
 <span id="cb16-34"><a href="#cb16-34"></a><span class="kw"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(y[z<span class="op">==</span><span class="dv">1</span>] <span class="op">~</span><span class="st"> </span>x[z<span class="op">==</span><span class="dv">1</span>])<span class="op">$</span>coef[<span class="dv">2</span>]</span>
-<span id="cb16-35"><a href="#cb16-35"></a><span class="co">#&gt;   x[z == 1] </span></span>
-<span id="cb16-36"><a href="#cb16-36"></a><span class="co">#&gt; -0.01107423</span></span>
+<span id="cb16-35"><a href="#cb16-35"></a><span class="co">#&gt;  x[z == 1] </span></span>
+<span id="cb16-36"><a href="#cb16-36"></a><span class="co">#&gt; -0.0144095</span></span>
 <span id="cb16-37"><a href="#cb16-37"></a><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span>(y[z<span class="op">==</span><span class="dv">1</span>], x[z<span class="op">==</span><span class="dv">1</span>])</span>
-<span id="cb16-38"><a href="#cb16-38"></a><span class="co">#&gt; [1] -0.007311313</span></span>
+<span id="cb16-38"><a href="#cb16-38"></a><span class="co">#&gt; [1] -0.00950638</span></span>
 <span id="cb16-39"><a href="#cb16-39"></a></span>
 <span id="cb16-40"><a href="#cb16-40"></a><span class="co"># derive</span></span>
 <span id="cb16-41"><a href="#cb16-41"></a>bh_xs =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">cov</a></span>(x,s)<span class="op">/</span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(x)</span>
@@ -441,9 +441,9 @@ e_i \sim N\left(0, Var(S) - \beta_{XS}^2 Var(X) - 2 \beta_{GS}^2 m(1-m) \right)
 <span id="cb16-45"><a href="#cb16-45"></a>bh_sz =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">cov</a></span>(s,z)<span class="op">/</span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(s)</span>
 <span id="cb16-46"><a href="#cb16-46"></a></span>
 <span id="cb16-47"><a href="#cb16-47"></a>(b_xy <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(z) <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(x) <span class="op">-</span><span class="st"> </span>bh_xz <span class="op">*</span><span class="st"> </span>bh_yz <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(x) <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(y)) <span class="op">/</span><span class="st"> </span>(bh_yz<span class="op">^</span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(x) <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(y) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(x)<span class="op">*</span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(z))</span>
-<span id="cb16-48"><a href="#cb16-48"></a><span class="co">#&gt; [1] -0.01393627</span></span>
+<span id="cb16-48"><a href="#cb16-48"></a><span class="co">#&gt; [1] -0.0148835</span></span>
 <span id="cb16-49"><a href="#cb16-49"></a>(b_xy <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(z) <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(x) <span class="op">-</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">cov</a></span>(x,z)<span class="op">/</span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(x) <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">cov</a></span>(y,z)<span class="op">/</span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(y) <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(x) <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(y)) <span class="op">/</span><span class="st"> </span>((<span class="kw"><a href="https://rdrr.io/r/stats/cor.html">cov</a></span>(y,z)<span class="op">/</span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(y))<span class="op">^</span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(x) <span class="op">*</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(y) <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(x)<span class="op">*</span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(z))</span>
-<span id="cb16-50"><a href="#cb16-50"></a><span class="co">#&gt; [1] -0.01393627</span></span>
+<span id="cb16-50"><a href="#cb16-50"></a><span class="co">#&gt; [1] -0.0148835</span></span>
 <span id="cb16-51"><a href="#cb16-51"></a>(b_xy <span class="op">*</span><span class="st"> </span>vz <span class="op">*</span><span class="st"> </span>vx <span class="op">-</span><span class="st"> </span>b_xs <span class="op">*</span><span class="st"> </span>logor_sz <span class="op">*</span><span class="st"> </span>vz <span class="op">*</span><span class="st"> </span>b_ys <span class="op">*</span><span class="st"> </span>logor_sz <span class="op">*</span><span class="st"> </span>vz <span class="op">*</span><span class="st"> </span>vx <span class="op">*</span><span class="st"> </span>vy) <span class="op">/</span><span class="st"> </span>((b_ys <span class="op">*</span><span class="st"> </span>logor_sz <span class="op">*</span><span class="st"> </span>vz)<span class="op">^</span><span class="dv">2</span> <span class="op">*</span><span class="st"> </span>vx <span class="op">*</span><span class="st"> </span>vy <span class="op">+</span><span class="st"> </span>vx<span class="op">*</span>vz)</span>
 <span id="cb16-52"><a href="#cb16-52"></a><span class="co">#&gt; [1] -0.01890409</span></span></code></pre></div>
 <p>How to test power. Two different ways, just use the native version</p>
@@ -478,7 +478,7 @@ e_i \sim N\left(0, Var(S) - \beta_{XS}^2 Var(X) - 2 \beta_{GS}^2 m(1-m) \right)
 <span id="cb18-16"><a href="#cb18-16"></a>  pval &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/Normal.html">pnorm</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span>(bh_xy <span class="op">/</span><span class="st"> </span>se), <span class="dt">lower.tail=</span><span class="ot">FALSE</span>)</span>
 <span id="cb18-17"><a href="#cb18-17"></a>  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="dt">bh_xy=</span>bh_xy, <span class="dt">cor_xy=</span>cor_xy, <span class="dt">pow=</span>pow, <span class="dt">se=</span>se, <span class="dt">pval=</span>pval, <span class="dt">ns=</span>ns))</span>
 <span id="cb18-18"><a href="#cb18-18"></a>}</span>
-<span id="cb18-19"><a href="#cb18-19"></a><span class="kw"><a href="../reference/simulate_y_structure.html">simulate_y_structure</a></span>(<span class="dt">n=</span><span class="dv">50000000</span>, <span class="dt">prop=</span><span class="fl">0.8</span>, <span class="dv">2</span>, <span class="dv">0</span>, <span class="fl">0.001</span>, <span class="fl">0.1</span>, <span class="fl">0.5</span>)</span>
+<span id="cb18-19"><a href="#cb18-19"></a><span class="kw">simulate_y_structure</span>(<span class="dt">n=</span><span class="dv">50000000</span>, <span class="dt">prop=</span><span class="fl">0.8</span>, <span class="dv">2</span>, <span class="dv">0</span>, <span class="fl">0.001</span>, <span class="fl">0.1</span>, <span class="fl">0.5</span>)</span>
 <span id="cb18-20"><a href="#cb18-20"></a><span class="co">#&gt; $bh_xy</span></span>
 <span id="cb18-21"><a href="#cb18-21"></a><span class="co">#&gt; [1] -0.001078848</span></span>
 <span id="cb18-22"><a href="#cb18-22"></a><span class="co">#&gt; </span></span>
@@ -496,7 +496,7 @@ e_i \sim N\left(0, Var(S) - \beta_{XS}^2 Var(X) - 2 \beta_{GS}^2 m(1-m) \right)
 <span id="cb18-34"><a href="#cb18-34"></a><span class="co">#&gt; </span></span>
 <span id="cb18-35"><a href="#cb18-35"></a><span class="co">#&gt; $ns</span></span>
 <span id="cb18-36"><a href="#cb18-36"></a><span class="co">#&gt; [1] 4e+07</span></span>
-<span id="cb18-37"><a href="#cb18-37"></a><span class="kw"><a href="../reference/simulate_y_structure.html">simulate_y_structure</a></span>(<span class="dt">n=</span><span class="dv">50000000</span>, <span class="dt">prop=</span><span class="fl">0.2</span>, <span class="dv">2</span>, <span class="dv">0</span>, <span class="fl">0.001</span>, <span class="fl">0.1</span>, <span class="fl">0.5</span>)</span>
+<span id="cb18-37"><a href="#cb18-37"></a><span class="kw">simulate_y_structure</span>(<span class="dt">n=</span><span class="dv">50000000</span>, <span class="dt">prop=</span><span class="fl">0.2</span>, <span class="dv">2</span>, <span class="dv">0</span>, <span class="fl">0.001</span>, <span class="fl">0.1</span>, <span class="fl">0.5</span>)</span>
 <span id="cb18-38"><a href="#cb18-38"></a><span class="co">#&gt; $bh_xy</span></span>
 <span id="cb18-39"><a href="#cb18-39"></a><span class="co">#&gt; [1] -0.001078848</span></span>
 <span id="cb18-40"><a href="#cb18-40"></a><span class="co">#&gt; </span></span>
@@ -529,7 +529,7 @@ e_i \sim N\left(0, Var(S) - \beta_{XS}^2 Var(X) - 2 \beta_{GS}^2 m(1-m) \right)
 <span id="cb19-12"><a href="#cb19-12"></a></span>
 <span id="cb19-13"><a href="#cb19-13"></a>res &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="dv">1</span><span class="op">:</span><span class="kw"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(param), <span class="cf">function</span>(x) {</span>
 <span id="cb19-14"><a href="#cb19-14"></a>  P &lt;-<span class="st"> </span>param[x,]</span>
-<span id="cb19-15"><a href="#cb19-15"></a>  o &lt;-<span class="st"> </span><span class="kw"><a href="../reference/simulate_y_structure.html">simulate_y_structure</a></span>(<span class="dt">n=</span>P<span class="op">$</span>n, <span class="dt">prop=</span>P<span class="op">$</span>prop, P<span class="op">$</span>or_sz, P<span class="op">$</span>b_xy, P<span class="op">$</span>rsq_xs, P<span class="op">$</span>rsq_ys, P<span class="op">$</span>maf)</span>
+<span id="cb19-15"><a href="#cb19-15"></a>  o &lt;-<span class="st"> </span><span class="kw">simulate_y_structure</span>(<span class="dt">n=</span>P<span class="op">$</span>n, <span class="dt">prop=</span>P<span class="op">$</span>prop, P<span class="op">$</span>or_sz, P<span class="op">$</span>b_xy, P<span class="op">$</span>rsq_xs, P<span class="op">$</span>rsq_ys, P<span class="op">$</span>maf)</span>
 <span id="cb19-16"><a href="#cb19-16"></a>  <span class="kw"><a href="https://dplyr.tidyverse.org/reference/reexports.html">as_tibble</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(P, o))</span>
 <span id="cb19-17"><a href="#cb19-17"></a>}) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_rows</a></span>()</span>
 <span id="cb19-18"><a href="#cb19-18"></a></span>
@@ -567,7 +567,7 @@ e_i \sim N\left(0, Var(S) - \beta_{XS}^2 Var(X) - 2 \beta_{GS}^2 m(1-m) \right)
 <span id="cb22-4"><a href="#cb22-4"></a><span class="co"># liability</span></span>
 <span id="cb22-5"><a href="#cb22-5"></a>z =<span class="st"> </span><span class="dv">1</span> <span class="op">+</span><span class="st"> </span><span class="fl">0.2</span><span class="op">*</span>x1</span>
 <span id="cb22-6"><a href="#cb22-6"></a><span class="kw"><a href="https://rdrr.io/r/base/mean.html">mean</a></span>(z)</span>
-<span id="cb22-7"><a href="#cb22-7"></a><span class="co">#&gt; [1] 1.16208</span></span>
+<span id="cb22-7"><a href="#cb22-7"></a><span class="co">#&gt; [1] 1.15638</span></span>
 <span id="cb22-8"><a href="#cb22-8"></a></span>
 <span id="cb22-9"><a href="#cb22-9"></a><span class="co"># probability of case</span></span>
 <span id="cb22-10"><a href="#cb22-10"></a>pr =<span class="st"> </span><span class="dv">1</span><span class="op">/</span>(<span class="dv">1</span><span class="op">+</span><span class="kw"><a href="https://rdrr.io/r/base/Log.html">exp</a></span>(<span class="op">-</span>z))</span>
@@ -577,33 +577,33 @@ e_i \sim N\left(0, Var(S) - \beta_{XS}^2 Var(X) - 2 \beta_{GS}^2 m(1-m) \right)
 <span id="cb22-14"><a href="#cb22-14"></a><span class="kw"><a href="https://rdrr.io/r/base/table.html">table</a></span>(y)</span>
 <span id="cb22-15"><a href="#cb22-15"></a><span class="co">#&gt; y</span></span>
 <span id="cb22-16"><a href="#cb22-16"></a><span class="co">#&gt;    0    1 </span></span>
-<span id="cb22-17"><a href="#cb22-17"></a><span class="co">#&gt; 2466 7534</span></span>
+<span id="cb22-17"><a href="#cb22-17"></a><span class="co">#&gt; 2335 7665</span></span>
 <span id="cb22-18"><a href="#cb22-18"></a></span>
 <span id="cb22-19"><a href="#cb22-19"></a><span class="co">#now feed it to glm:</span></span>
 <span id="cb22-20"><a href="#cb22-20"></a>(<span class="dt">logor =</span> <span class="kw"><a href="https://rdrr.io/r/stats/glm.html">glm</a></span>(y <span class="op">~</span><span class="st"> </span>x1, <span class="dt">family=</span><span class="st">"binomial"</span>)<span class="op">$</span>coef[<span class="dv">2</span>])</span>
 <span id="cb22-21"><a href="#cb22-21"></a><span class="co">#&gt;        x1 </span></span>
-<span id="cb22-22"><a href="#cb22-22"></a><span class="co">#&gt; 0.1934572</span></span>
+<span id="cb22-22"><a href="#cb22-22"></a><span class="co">#&gt; 0.1848803</span></span>
 <span id="cb22-23"><a href="#cb22-23"></a></span>
 <span id="cb22-24"><a href="#cb22-24"></a><span class="co"># estimate lm</span></span>
 <span id="cb22-25"><a href="#cb22-25"></a><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">cov</a></span>(x1,y) <span class="op">/</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/cor.html">var</a></span>(x1)</span>
-<span id="cb22-26"><a href="#cb22-26"></a><span class="co">#&gt; [1] 0.03550583</span></span>
+<span id="cb22-26"><a href="#cb22-26"></a><span class="co">#&gt; [1] 0.0326352</span></span>
 <span id="cb22-27"><a href="#cb22-27"></a>(<span class="dt">beta =</span> <span class="kw"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span>(y <span class="op">~</span><span class="st"> </span>x1)<span class="op">$</span>coef[<span class="dv">2</span>])</span>
-<span id="cb22-28"><a href="#cb22-28"></a><span class="co">#&gt;         x1 </span></span>
-<span id="cb22-29"><a href="#cb22-29"></a><span class="co">#&gt; 0.03550583</span></span>
+<span id="cb22-28"><a href="#cb22-28"></a><span class="co">#&gt;        x1 </span></span>
+<span id="cb22-29"><a href="#cb22-29"></a><span class="co">#&gt; 0.0326352</span></span>
 <span id="cb22-30"><a href="#cb22-30"></a></span>
 <span id="cb22-31"><a href="#cb22-31"></a><span class="co"># convert beta to logor</span></span>
 <span id="cb22-32"><a href="#cb22-32"></a>prop &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/sum.html">sum</a></span>(y <span class="op">==</span><span class="st"> </span><span class="dv">1</span>) <span class="op">/</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(y)</span>
 <span id="cb22-33"><a href="#cb22-33"></a>mu &lt;-<span class="st"> </span>prop <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>prop)</span>
 <span id="cb22-34"><a href="#cb22-34"></a>beta <span class="op">/</span><span class="st"> </span>mu</span>
 <span id="cb22-35"><a href="#cb22-35"></a><span class="co">#&gt;        x1 </span></span>
-<span id="cb22-36"><a href="#cb22-36"></a><span class="co">#&gt; 0.1911089</span></span>
+<span id="cb22-36"><a href="#cb22-36"></a><span class="co">#&gt; 0.1823422</span></span>
 <span id="cb22-37"><a href="#cb22-37"></a></span>
 <span id="cb22-38"><a href="#cb22-38"></a><span class="co"># Is it different when you use the known intercept?</span></span>
 <span id="cb22-39"><a href="#cb22-39"></a>propt &lt;-<span class="st"> </span>(<span class="dv">1</span> <span class="op">/</span><span class="st"> </span>(<span class="dv">1</span><span class="op">+</span><span class="kw"><a href="https://rdrr.io/r/base/Log.html">exp</a></span>(<span class="op">-</span><span class="dv">1</span>)))</span>
 <span id="cb22-40"><a href="#cb22-40"></a>mut &lt;-<span class="st"> </span>propt <span class="op">*</span><span class="st"> </span>(<span class="dv">1</span> <span class="op">-</span><span class="st"> </span>propt)</span>
 <span id="cb22-41"><a href="#cb22-41"></a>beta <span class="op">/</span><span class="st"> </span>mut</span>
 <span id="cb22-42"><a href="#cb22-42"></a><span class="co">#&gt;        x1 </span></span>
-<span id="cb22-43"><a href="#cb22-43"></a><span class="co">#&gt; 0.1805884</span></span></code></pre></div>
+<span id="cb22-43"><a href="#cb22-43"></a><span class="co">#&gt; 0.1659879</span></span></code></pre></div>
 <hr>
 <p><span class="math display">\[
 cov(s,z) = p(1-p) \left[E(s | z = 1) - E(s | z = 0)\right]

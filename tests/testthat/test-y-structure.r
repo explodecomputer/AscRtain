@@ -1,5 +1,5 @@
 context("y-structure")
-library(collidR)
+library(AscRtain)
 
 test_that("simulation", {
 	a <- simulate_y_structure(n=50000000, prop=0.02, or_sz=3, b_xy=0, rsq_xs=0.2, rsq_ys=0.2, vx=1, vy=1, vs=1, sig.level=5e-8)

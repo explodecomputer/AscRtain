@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
-library(collidR)
+library(AscRtain)
 ```
 
 Following https://osf.io/vrcuf/, can infer the biased OR for a binary exposure ($A$) on a binary outcome ($Y$) when both of the traits influence the probability of being present in the sample ($S$)
@@ -40,10 +40,10 @@ $$
 
 Scenario: we find an association between $A$ and $Y$ in our ascertained sample. Our question is what effects must $A$ and $Y$ have on sample ascertainment in order to induce the observed odds ratio $OR$, assuming that the true odds ratio is 1.
 
-Initialise a new `BinaryCollider` class
+Initialise a new `VBB` (**V**-structure, **B**inary exposure, **B**inary outcome) class
 
 ```{r}
-x <- BinaryCollider$new()
+x <- VBB$new()
 x
 ```
 
@@ -85,6 +85,12 @@ x$histogram()
 Visualise the $\beta_*$ parameter ranges that meet the target odds ratio
 
 ```{r}
+x$scatter()
+```
+
+Or in 3D:
+
+```{r}
 x$scatter3d()
 ```
 
@@ -93,3 +99,53 @@ Can try to do this in 3D also:
 ```{r}
 plot3Drgl::plotrgl()
 ```
+
+
+## Check the results through simulation
+
+Here, $A$ is ACE inhibitor use, $Y$ is Covid-19 status, and $S$ is presence in the first release of the COVID Symptom Tracker dataset.
+
+Observational association of ACE-i influence on Covid-19 status gives OR $\approx 2$. Assume 15% of population take ACE-i, 10% are infected with coronavirus at the time of sampling, 1.9 million of an adult population of 54 million are present in the sample (3.5%). What influences of ACE-inhibitor use and Covid-19 status would be required to induce a collider bias of $OR=2$?
+
+Enter parameters:
+
+```{r}
+x <- VBB$new()
+x$parameter_space(
+	target_or=2, 
+	pS=0.035, 
+	pA=0.15,
+	pY=0.1,
+	pAY=0,
+	b0_range=c(0,1), 
+	ba_range=c(-0.2,0.2), 
+	by_range=c(-0.2,0.2), 
+	bay_range=c(0,0), 
+	granularity=100
+)
+x$scatter3d()
+```
+
+Simulate individual level data according to the first result, where $A$ has no influence on $Y$. Note that using a population size of 1 million as the sample size doesn't matter, just the proportion sampled.
+
+```{r}
+a <- subset(x$param, abs(by) < 0.1 & b0 < 0.02)[1,]
+n <- 1000000
+Y <- rbinom(n, 1, a$pY)
+A <- rbinom(n, 1, a$pA)
+pS <- a$b0 + a$ba * A + a$by * Y
+S <- rbinom(n, 1, pS)
+```
+
+What proportion of the population are present in the sample?
+
+```{r}
+sum(S) / length(S)
+```
+
+Estimate association between `A` and `Y`
+
+```{r}
+summary(glm(Y[as.logical(S)] ~ A[as.logical(S)], family="binomial"))$coef[2,1] %>% exp
+```
+

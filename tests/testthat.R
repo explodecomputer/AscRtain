@@ -1,4 +1,4 @@
 library(testthat)
-library(collidR)
+library(AscRtain)
 
-test_check("collidR")
+test_check("AscRtain")
