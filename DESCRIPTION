@@ -8,6 +8,8 @@ Authors@R:
            email = "explodecomputer@gmail.com",
            comment = c(ORCID = "0000-0003-0920-1055"))
 Description: A set of simulation and plotting functions for examining different collider structures on estimates of associations between two variables.
+URL: https://github.com/explodecomputer/AscRtain
+BugReports: https://github.com/explodecomputer/AscRtain/issues
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
