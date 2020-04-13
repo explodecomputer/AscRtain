@@ -112,7 +112,7 @@ Enter parameters:
 ```{r}
 x <- VBB$new()
 x$parameter_space(
-	target_or=2, 
+	target_or=2.07, 
 	pS=0.035, 
 	pA=0.15,
 	pY=0.1,
@@ -123,7 +123,8 @@ x$parameter_space(
 	bay_range=c(0,0), 
 	granularity=100
 )
-x$scatter3d()
+x$scatter() +
+ggplot2::labs(x="Effect of ACE-i on inclusion probability (bA)", y="Effect of Covid-19 on inclusion probability (bY)", colour="Baseline inclusion\nprobability (b0)")
 ```
 
 Simulate individual level data according to the first result, where $A$ has no influence on $Y$. Note that using a population size of 1 million as the sample size doesn't matter, just the proportion sampled.
