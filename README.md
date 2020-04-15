@@ -10,6 +10,8 @@
 # AscRtain
 
 A set of simulation and plotting functions for examining bias in observational associations that might arise due to sampling ascertainment, in particular, when hypothesised exposure and outcome both influence whether an individual is included in the dataset being analysed.
+This will be accompanied by an AscRtain.shiny app for pedagogical purposes
+
 
 ## Installation
 
