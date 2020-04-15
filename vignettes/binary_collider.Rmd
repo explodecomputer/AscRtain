@@ -62,11 +62,11 @@ x$parameter_space(
 	pA=0.15,
 	pY=0.1,
 	pAY=0,
-	b0_range=c(0,1), 
+	b0_range=c(0,0.1), 
 	ba_range=c(-0.2,0.2), 
 	by_range=c(-0.2,0.2), 
 	bay_range=c(0,0), 
-	granularity=100
+	granularity=200
 )
 ```
 
@@ -96,7 +96,7 @@ x$scatter3d()
 
 Can try to do this in 3D also:
 
-```{r}
+```{r, webgl=TRUE}
 plot3Drgl::plotrgl()
 ```
 
@@ -111,17 +111,17 @@ Enter parameters:
 
 ```{r}
 x <- VBB$new()
-x$parameter_space(
+x$parameter_space(	
 	target_or=2.07, 
 	pS=0.035, 
 	pA=0.15,
 	pY=0.1,
 	pAY=0,
-	b0_range=c(0,1), 
+	b0_range=c(0,0.1), 
 	ba_range=c(-0.2,0.2), 
 	by_range=c(-0.2,0.2), 
 	bay_range=c(0,0), 
-	granularity=100
+	granularity=200
 )
 x$scatter() +
 ggplot2::labs(x="Effect of ACE-i on inclusion probability (bA)", y="Effect of Covid-19 on inclusion probability (bY)", colour="Baseline inclusion\nprobability (b0)")
