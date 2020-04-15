@@ -66,17 +66,20 @@ VBB <- R6Class("VBB", list(
 			ba = seq(ba_range[1], ba_range[2], length.out=granularity) %>% unique(),
 			by = seq(by_range[1], by_range[2], length.out=granularity) %>% unique(),
 			bay = seq(bay_range[1], bay_range[2], length.out=granularity) %>% unique()
-		) %>%
+		)
+		message(nrow(param), " parameter combinations")
+		param <- param %>%
 		dplyr::mutate(ps1 = self$ps_calc(b0=b0, ba=ba, pA=pA, by=by, pY=pY, bay=bay, pAY=pAY)) %>%
 		dplyr::filter(ps1 >= pS - pS_tol & ps1 <= pS + pS_tol) %>%
 		dplyr::mutate(or = self$or_calc(b0=b0, ba=ba, by=by, bay=bay))
-
+		message(nrow(param), " within pS_tol")
 		if(target_or >= 1)
 		{
 			param <- subset(param, or >= target_or & or < 50)
 		} else {
 			param <- subset(param, or <= target_or & or > 0)
 		}
+		message(nrow(param), " beyond OR threshold")
 		self$param <- dplyr::as_tibble(param)
 	},
 
