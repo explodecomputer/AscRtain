@@ -114,28 +114,34 @@ x <- VBB$new()
 x$parameter_space(	
 	target_or=2.07, 
 	pS=0.035, 
-	pA=0.15,
+	pA=0.03,
 	pY=0.1,
 	pAY=0,
 	b0_range=c(0,0.1), 
-	ba_range=c(-0.2,0.2), 
-	by_range=c(-0.2,0.2), 
+	ba_range=c(-0.1,0.1), 
+	by_range=c(-0.1,0.1), 
 	bay_range=c(0,0), 
 	granularity=200
 )
 x$scatter() +
-ggplot2::labs(x="Effect of ACE-i on inclusion probability (bA)", y="Effect of Covid-19 on inclusion probability (bY)", colour="Baseline inclusion\nprobability (b0)")
+ggplot2::labs(x="Effect of ACE-i on inclusion probability (bA)", y="Effect of Covid-19 on inclusion probability (bY)", colour="Baseline inclusion\nprobability (b0)") +
+ggplot2::annotate("rect", xmin=0.01, xmax=0.02, ymin=-Inf, ymax=Inf, alpha=0.4)
 ```
 
 Simulate individual level data according to the first result, where $A$ has no influence on $Y$. Note that using a population size of 1 million as the sample size doesn't matter, just the proportion sampled.
 
 ```{r}
-a <- subset(x$param, abs(by) < 0.1 & b0 < 0.02)[1,]
+a <- subset(x$param, by < 0 & ba > 0.01 & b0 > 0.02)[1,]
 n <- 1000000
 Y <- rbinom(n, 1, a$pY)
 A <- rbinom(n, 1, a$pA)
-pS <- a$b0 + a$ba * A + a$by * Y
+pS <- a$b0 + 0.01 * A + a$by * Y
 S <- rbinom(n, 1, pS)
+
+# target 4.2% in sample
+# assume 3% in uk
+dat <- dplyr::tibble(A,Y,S)
+subset(dat, S==1) %>% {table(.$A)/sum(.$S)}
 ```
 
 What proportion of the population are present in the sample?
