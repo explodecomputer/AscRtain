@@ -150,3 +150,8 @@ Estimate association between `A` and `Y`
 summary(glm(Y[as.logical(S)] ~ A[as.logical(S)], family="binomial"))$coef[2,1] %>% exp
 ```
 
+Compare to expected biased association 
+
+```{r}
+a$or
+```
