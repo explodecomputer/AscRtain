@@ -16,6 +16,8 @@ knitr::opts_chunk$set(
 
 ```{r setup}
 library(AscRtain)
+library(ggplot2)
+library(ggnewscale)
 ```
 
 Following https://osf.io/vrcuf/, can infer the biased OR for a binary exposure ($A$) on a binary outcome ($Y$) when both of the traits influence the probability of being present in the sample ($S$)
@@ -101,13 +103,13 @@ plot3Drgl::plotrgl()
 ```
 
 
-## Check the results through simulation
+## ACE-inhibitor and COVID19 association
 
 Here, $A$ is ACE inhibitor use, $Y$ is Covid-19 status, and $S$ is presence in the first release of the COVID Symptom Tracker dataset.
 
 Observational association of ACE-i influence on Covid-19 status gives OR $\approx 2$. Assume 7.8% of population take ACE-i, 10% are infected with coronavirus at the time of sampling, 1.9 million of an adult population of 54 million are present in the sample (3.5%). What influences of ACE-inhibitor use and Covid-19 status would be required to induce a collider bias of $OR=2$?
 
-Enter parameters:
+Enter parameters without interactions to reduce the paramater space for now:
 
 ```{r}
 x <- VBB$new()
@@ -116,14 +118,14 @@ x$parameter_space(
 	pS=0.035, 
 	pA=0.078,
 	pY=0.1,
-	pAY=0,
+	pAY=0.03,
 	b0_range=c(0,0.1), 
 	ba_range=c(-0.1,0.1), 
-	by_range=c(-0.1,0.1), 
+	by_range=c(-0.2,0.2), 
 	bay_range=c(0,0), 
 	granularity=200
 )
-
+x$scatter()
 ```
 
 Within our sample the prevalence of ACEi use is 4.2%. In the general population it is 7.8%. This means we can narrow down the range of our simulations to only look at parameter values that would give that level of selection (reduced likelihood of selection when on ACEi).
@@ -134,7 +136,7 @@ Need to figure out what value of $\beta_A$ could give rise to the difference in 
 n <- 1000000
 Y <- rbinom(n, 1, 0.1)
 A <- rbinom(n, 1, 0.078)
-pS <- 0.03 - 0.02 * A + 0.1 * Y
+pS <- 0.03 - 0.015 * A + 0.1 * Y
 S <- rbinom(n, 1, pS)
 
 # target 4.2% in sample
@@ -152,26 +154,48 @@ ggplot2::labs(x="Effect of ACE-i on inclusion probability (bA)", y="Effect of Co
 ggplot2::annotate("rect", xmin=-0.01, xmax=-0.02, ymin=-Inf, ymax=Inf, alpha=0.4)
 ```
 
+Now that we can fix the $\beta_A$ parameter to 0.015, we can introduce the interaction effect. Here, if somebody is a case for COVID and uses ACEi do they have a different probability of selection than just the marginal effects.
+
 We can also ask - is our association actually more likely to be attenuated to OR=2, rather than inflated from OR=1. Let's search the parameter space for parameter sets that give OR=0.8 and superimpose on the figure.
 
 ```{r}
+
+
+x <- VBB$new()
+x$parameter_space(	
+	target_or=2, 
+	pS=0.035, 
+	pA=0.078,
+	pY=0.1,
+	pAY=0.078 * 0.1,
+	b0_range=c(0,0.1), 
+	ba_range=c(-0.015, -0.015), 
+	by_range=c(-0.1,0.1), 
+	bay_range=c(-0.1,0.1), 
+	granularity=200
+)
+
 x1 <- VBB$new()
 x1$parameter_space(	
 	target_or=0.8, 
 	pS=0.035, 
 	pA=0.078,
 	pY=0.1,
-	pAY=0,
+	pAY=0.078 * 0.1,
 	b0_range=c(0,0.1), 
-	ba_range=c(-0.1,0.1), 
+	ba_range=c(-0.015, -0.015), 
 	by_range=c(-0.1,0.1), 
-	bay_range=c(0,0), 
+	bay_range=c(-0.1,0.1), 
 	granularity=200
 )
-x$scatter() +
-ggplot2::labs(x="Effect of ACE-i on inclusion probability (bA)", y="Effect of Covid-19 on inclusion probability (bY)", colour="Baseline inclusion\nprobability (b0)") +
-ggplot2::annotate("rect", xmin=-0.01, xmax=-0.02, ymin=-Inf, ymax=Inf, alpha=0.4) +
-ggplot2::geom_point(data=x1$param, colour="red", size=0.1)
+
+x$param %>% ggplot(., aes(x=bay, y=by)) +
+geom_point(aes(colour=b0)) +
+labs(colour="Baseline inclusion\nprobability (b0)\n(OR>2)") +
+new_scale_colour() +
+ggplot2::geom_point(data=x1$param, aes(colour=b0)) +
+scale_colour_gradient(low="white", high="red") +
+ggplot2::labs(x="Effect of ACE-i AND Covid-19 on inclusion probability (bAY)", y="Effect of Covid-19 on inclusion probability (bY)", colour="Baseline inclusion\nprobability (b0)\n(OR<0.8)")
 ```
 
 So it could go either way really, a lot of the figure is shaded in both blue and red, and we don't know what the actual selection based on covid is. This indicates that it is really not reliable to be making claims about causality from this type of sampling.
@@ -183,8 +207,17 @@ Note that some areas of the figure have both negative and positive bias - that i
 
 Simulate individual level data according to the first result, where $A$ has no influence on $Y$. Note that using a population size of 1 million as the sample size doesn't matter, just the proportion sampled.
 
+Parameters:
+
 ```{r}
-a <- subset(x$param, by < 0 & ba > 0.01 & b0 > 0.02)[1,]
+a <- subset(x$param, ba < -0.01 & ba > -0.02 & bay == min(abs(bay)))[1,]
+a
+```
+
+Simulate
+
+```{r}
+set.seed(31415)
 n <- 1000000
 Y <- rbinom(n, 1, a$pY)
 A <- rbinom(n, 1, a$pA)
@@ -201,7 +234,7 @@ sum(S) / length(S)
 Estimate association between `A` and `Y`
 
 ```{r}
-summary(glm(Y[as.logical(S)] ~ A[as.logical(S)], family="binomial"))$coef[2,1] %>% exp
+summary(glm(Y ~ A, family="binomial", subset=S==1))$coef[2,1] %>% exp
 ```
 
 Compare to expected biased association 
@@ -209,3 +242,92 @@ Compare to expected biased association
 ```{r}
 a$or
 ```
+
+
+## Weighted regression to correct for bias
+
+If a logistic regression in the complete population could be performed to estimate the effect of $A$ and $Y$ on $S$ then inverse probability weighting could be achieved by 
+
+1. Estimating the log odds ratios of $A$, $Y$ and $A*Y$ (and the intercept) on $S$.
+2. Generate the fitted values
+3. Convert to probabilities (e.g. using the logistic distribution)
+
+The inverse of these probabilities are the weights to be used in logistic regression in the ascertained sample:
+
+```{r}
+probs <- glm(S ~ A + Y + A:Y, family="binomial") %>% fitted.values()
+table(probs)
+```
+
+Associations in ascertained sample (biased):
+
+```{r}
+summary(glm(Y ~ A, family="binomial", subset=S==1))$coef[2] %>% exp
+```
+
+Associations in total population (unbiased):
+
+```{r}
+summary(glm(Y ~ A, family="binomial"))$coef[2] %>% exp
+```
+
+Weighted regression in ascertained sample (unbiased):
+
+```{r}
+summary(glm(Y ~ A, family="binomial", subset=S==1, weight=1/probs))$coef[2] %>% exp
+```
+
+However, not having the complete population data available means we cannot actually estimate the effects of A and Y on S directly. If we did know those effects (on the log OR scale), then the weights are easily generated:
+
+```{r}
+coef <- glm(S ~ A + Y + A:Y, family="binomial")$coef
+probs2 <- model.matrix(~ A + Y + A:Y, subset=S==1) %*% coef %>% plogis
+summary(glm(Y ~ A, family="binomial", subset=S==1, weight=1/probs2))$coef[2] %>% exp
+```
+
+Instead, we have a set of parameters that we know give rise to bias. There is a slight complication in that those parameters are in terms of risk difference, not log odds ratios. So we need to convert them:
+
+```{r}
+# Define the case fraction
+mu <- sum(S) / length(S)
+coef2 <- c(
+	qlogis(a$b0),
+	a$ba / (mu * (1-mu)),
+	a$by / (mu * (1-mu)),
+	a$bay / (mu * (1-mu))
+)
+probs3 <- model.matrix(~ A + Y + A:Y, subset=S==1) %*% coef2 %>% plogis
+table(probs3)
+table(probs2)
+summary(glm(Y ~ A, family="binomial", subset=S==1, weight=1/probs3))$coef[2] %>% exp
+summary(glm(Y ~ A, family="binomial", subset=S==1))$coef[2] %>% exp
+```
+
+This goes some way towards attenuating the effect but it's obviously still some way off. This is probably because the result is very sensitive to the interaction term, and we don't seem to be capturing that well. e.g. Here is the weighting when the interaction term is included and omitted:
+
+```{r}
+probs_int <- glm(S ~ A + Y + A:Y, family="binomial") %>% fitted.values()
+probs_noint <- glm(S ~ A + Y, family="binomial") %>% fitted.values()
+summary(glm(Y ~ A, family="binomial", subset=S==1, weight=1/probs_int))$coef[2] %>% exp
+summary(glm(Y ~ A, family="binomial", subset=S==1, weight=1/probs_noint))$coef[2] %>% exp
+```
+
+Omitting the interaction term, even though small, makes a big difference. Also the estimate of the interaction effect in risk difference terms is quite different from that simulated even though the other terms are still quite well estimated:
+
+```{r}
+coef3 <- lm(S ~ A + Y + A:Y)$coef
+coef3[1] <- qlogis(coef3[1])
+coef3[2:4] <- coef3[2:4] / (mu * (1-mu))
+coef3
+coef
+```
+
+The difference in the weighted regressions is large:
+
+```{r}
+probs4 <- model.matrix(~ A + Y + A:Y, subset=S==1) %*% coef3 %>% plogis
+summary(glm(Y ~ A, family="binomial", subset=S==1, weight=1/probs4))$coef[2] %>% exp
+summary(glm(Y ~ A, family="binomial", subset=S==1, weight=1/probs3))$coef[2] %>% exp
+summary(glm(Y ~ A, family="binomial", subset=S==1, weight=1/probs2))$coef[2] %>% exp
+```
+

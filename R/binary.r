@@ -70,7 +70,7 @@ VBB <- R6Class("VBB", list(
 		message(nrow(param), " parameter combinations")
 		param <- param %>%
 		dplyr::mutate(ps1 = self$ps_calc(b0=b0, ba=ba, pA=pA, by=by, pY=pY, bay=bay, pAY=pAY)) %>%
-		dplyr::filter(ps1 >= pS - pS_tol & ps1 <= pS + pS_tol) %>%
+		dplyr::filter(ps1 >= pS - pS_tol & ps1 <= pS + pS_tol & b0 + by + ba + bay > 0) %>%
 		dplyr::mutate(or = self$or_calc(b0=b0, ba=ba, by=by, bay=bay))
 		message(nrow(param), " within pS_tol")
 		if(target_or >= 1)
