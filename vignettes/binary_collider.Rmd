@@ -105,7 +105,7 @@ plot3Drgl::plotrgl()
 
 Here, $A$ is ACE inhibitor use, $Y$ is Covid-19 status, and $S$ is presence in the first release of the COVID Symptom Tracker dataset.
 
-Observational association of ACE-i influence on Covid-19 status gives OR $\approx 2$. Assume 15% of population take ACE-i, 10% are infected with coronavirus at the time of sampling, 1.9 million of an adult population of 54 million are present in the sample (3.5%). What influences of ACE-inhibitor use and Covid-19 status would be required to induce a collider bias of $OR=2$?
+Observational association of ACE-i influence on Covid-19 status gives OR $\approx 2$. Assume 7.8% of population take ACE-i, 10% are infected with coronavirus at the time of sampling, 1.9 million of an adult population of 54 million are present in the sample (3.5%). What influences of ACE-inhibitor use and Covid-19 status would be required to induce a collider bias of $OR=2$?
 
 Enter parameters:
 
@@ -114,7 +114,52 @@ x <- VBB$new()
 x$parameter_space(	
 	target_or=2.07, 
 	pS=0.035, 
-	pA=0.03,
+	pA=0.078,
+	pY=0.1,
+	pAY=0,
+	b0_range=c(0,0.1), 
+	ba_range=c(-0.1,0.1), 
+	by_range=c(-0.1,0.1), 
+	bay_range=c(0,0), 
+	granularity=200
+)
+
+```
+
+Within our sample the prevalence of ACEi use is 4.2%. In the general population it is 7.8%. This means we can narrow down the range of our simulations to only look at parameter values that would give that level of selection (reduced likelihood of selection when on ACEi).
+
+Need to figure out what value of $\beta_A$ could give rise to the difference in prevalences between population and sample/
+
+```{r}
+n <- 1000000
+Y <- rbinom(n, 1, 0.1)
+A <- rbinom(n, 1, 0.078)
+pS <- 0.03 - 0.02 * A + 0.1 * Y
+S <- rbinom(n, 1, pS)
+
+# target 4.2% in sample
+# assume 7.8% in uk
+dat <- dplyr::tibble(A,Y,S)
+subset(dat, S==1) %>% {table(.$A)/sum(.$S)}
+```
+
+Likely somewhere between $-0.1$ and $-0.2$.
+
+
+```{r}
+x$scatter() +
+ggplot2::labs(x="Effect of ACE-i on inclusion probability (bA)", y="Effect of Covid-19 on inclusion probability (bY)", colour="Baseline inclusion\nprobability (b0)") +
+ggplot2::annotate("rect", xmin=-0.01, xmax=-0.02, ymin=-Inf, ymax=Inf, alpha=0.4)
+```
+
+We can also ask - is our association actually more likely to be attenuated to OR=2, rather than inflated from OR=1. Let's search the parameter space for parameter sets that give OR=0.8 and superimpose on the figure.
+
+```{r}
+x1 <- VBB$new()
+x1$parameter_space(	
+	target_or=0.8, 
+	pS=0.035, 
+	pA=0.078,
 	pY=0.1,
 	pAY=0,
 	b0_range=c(0,0.1), 
@@ -125,8 +170,16 @@ x$parameter_space(
 )
 x$scatter() +
 ggplot2::labs(x="Effect of ACE-i on inclusion probability (bA)", y="Effect of Covid-19 on inclusion probability (bY)", colour="Baseline inclusion\nprobability (b0)") +
-ggplot2::annotate("rect", xmin=0.01, xmax=0.02, ymin=-Inf, ymax=Inf, alpha=0.4)
+ggplot2::annotate("rect", xmin=-0.01, xmax=-0.02, ymin=-Inf, ymax=Inf, alpha=0.4) +
+ggplot2::geom_point(data=x1$param, colour="red", size=0.1)
 ```
+
+So it could go either way really, a lot of the figure is shaded in both blue and red, and we don't know what the actual selection based on covid is. This indicates that it is really not reliable to be making claims about causality from this type of sampling.
+
+Note that some areas of the figure have both negative and positive bias - that is because it changes with different levels of background participation ($\beta_0$). This parameter is particularly difficult to estimate what the likely true value is.
+
+
+## Simulate to check
 
 Simulate individual level data according to the first result, where $A$ has no influence on $Y$. Note that using a population size of 1 million as the sample size doesn't matter, just the proportion sampled.
 
@@ -135,13 +188,8 @@ a <- subset(x$param, by < 0 & ba > 0.01 & b0 > 0.02)[1,]
 n <- 1000000
 Y <- rbinom(n, 1, a$pY)
 A <- rbinom(n, 1, a$pA)
-pS <- a$b0 + 0.01 * A + a$by * Y
+pS <- a$b0 + a$ba * A + a$by * Y
 S <- rbinom(n, 1, pS)
-
-# target 4.2% in sample
-# assume 3% in uk
-dat <- dplyr::tibble(A,Y,S)
-subset(dat, S==1) %>% {table(.$A)/sum(.$S)}
 ```
 
 What proportion of the population are present in the sample?
