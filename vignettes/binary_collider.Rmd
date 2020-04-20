@@ -25,13 +25,13 @@ Following https://osf.io/vrcuf/, can infer the biased OR for a binary exposure (
 Assume that being present in the sample is simply:
 
 $$
-P(S = 1 | A,Y) = \beta_0 + \beta_A A + \beta_Y Y + \beta_{AY} AY
+\mathbb{P}(S = 1 | A,Y) = \beta_0 + \beta_A A + \beta_Y Y + \beta_{AY} AY
 $$
 
 where $A = {0,1}$ and $Y = {0,1}$. The expected odds ratio under this scenario is then:
 
 $$
-E[\hat{OR}_{S=1}] = \frac{\beta_0(\beta_0 + \beta_A + \beta_Y + \beta_{AY})}{(\beta_0 + \beta_A)(\beta_0 + \beta_Y)}
+\mathbb{E}\left[\widehat{\operatorname{OR}}_{S=1}\right] = \frac{\beta_0(\beta_0 + \beta_A + \beta_Y + \beta_{AY})}{(\beta_0 + \beta_A)(\beta_0 + \beta_Y)}
 $$
 
 Suppose that we know the fraction of the population that is present in our sample ($p_{S}$). We are only interested in the $\beta_*$ parameter values that give rise to a value of $p_{S}$ that is within the bounds of expectation:
