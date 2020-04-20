@@ -120,7 +120,8 @@ VBB <- R6Class("VBB", list(
 	{
 		ggplot2::ggplot(self$param, ggplot2::aes(x=or)) +
 		ggplot2::geom_histogram(bins=bins) +
-		ggplot2::scale_x_log10()
+		ggplot2::scale_x_log10() + 
+	  ggplot2::xlab("OR")
 	}
 
 ))
