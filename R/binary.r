@@ -105,7 +105,10 @@ VBB <- R6Class("VBB", list(
 	scatter = function()
 	{
 		ggplot2::ggplot(self$param, ggplot2::aes(x=ba, y=by)) +
-		ggplot2::geom_point(ggplot2::aes(colour=b0))
+		ggplot2::geom_point(ggplot2::aes(colour=b0)) + 
+    ggplot2::xlab(expression(beta[A])) + 
+    ggplot2::ylab(expression(beta[Y])) + 
+    ggplot2::labs(colour = expression(beta[0]))
 	},
 
 	#' @description
