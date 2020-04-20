@@ -152,8 +152,7 @@ Likely somewhere between $-0.1$ and $-0.2$.
 x$scatter() +
 ggplot2::labs(x = expression(paste("Effect of ACE-i on inclusion probability (", beta[A],")")), 
               y = expression(paste("Effect of Covid-19 on inclusion probability (", beta[Y],")")), 
-              colour = expression(paste("Baseline inclusion\nprobability", (beta[0]), sep = "  "))) +
-ggplot2::theme(legend.title.align = 0.5) + 
+              colour = expression(paste("Baseline inc. prob. ", (beta[0])))) +
 ggplot2::annotate("rect", xmin=-0.01, xmax=-0.02, ymin=-Inf, ymax=Inf, alpha=0.4)
 ```
 
@@ -162,8 +161,6 @@ Now that we can fix the $\beta_A$ parameter to 0.015, we can introduce the inter
 We can also ask - is our association actually more likely to be attenuated to OR=2, rather than inflated from OR=1. Let's search the parameter space for parameter sets that give OR=0.8 and superimpose on the figure.
 
 ```{r}
-
-
 x <- VBB$new()
 x$parameter_space(	
 	target_or=2, 
@@ -192,13 +189,15 @@ x1$parameter_space(
 	granularity=200
 )
 
-x$param %>% ggplot(., aes(x=bay, y=by)) +
-geom_point(aes(colour=b0)) +
-labs(colour="Baseline inclusion\nprobability (b0)\n(OR>2)") +
-new_scale_colour() +
-ggplot2::geom_point(data=x1$param, aes(colour=b0)) +
-scale_colour_gradient(low="white", high="red") +
-ggplot2::labs(x="Effect of ACE-i AND Covid-19 on inclusion probability (bAY)", y="Effect of Covid-19 on inclusion probability (bY)", colour="Baseline inclusion\nprobability (b0)\n(OR<0.8)")
+x$param %>% ggplot2::ggplot(., aes(x = bay, y = by)) +
+  ggplot2::geom_point(aes(colour = b0)) +
+  ggplot2::labs(colour = expression(paste("Baseline inclusion\nprobability ", (beta[0]), "\n(OR > 2)"))) +
+  ggnewscale::new_scale_colour() +
+  ggplot2::geom_point(data = x1$param, aes(colour = b0)) +
+  ggplot2::scale_colour_gradient(low = "white", high = "red") +
+  ggplot2::labs(x = expression(paste("Effect of ACE-i AND Covid-19 on inclusion probability (", beta[AY],")")), 
+                y = expression(paste("Effect of Covid-19 on inclusion probability (", beta[Y], ")")), 
+                colour = "Baseline inclusion\nprobability (b0)\n(OR<0.8)")
 ```
 
 So it could go either way really, a lot of the figure is shaded in both blue and red, and we don't know what the actual selection based on covid is. This indicates that it is really not reliable to be making claims about causality from this type of sampling.
@@ -333,4 +332,3 @@ summary(glm(Y ~ A, family="binomial", subset=S==1, weight=1/probs4))$coef[2] %>%
 summary(glm(Y ~ A, family="binomial", subset=S==1, weight=1/probs3))$coef[2] %>% exp
 summary(glm(Y ~ A, family="binomial", subset=S==1, weight=1/probs2))$coef[2] %>% exp
 ```
-
