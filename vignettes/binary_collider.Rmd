@@ -40,7 +40,7 @@ $$
 p_{S} = \beta_0 + \beta_A p_A + \beta_Y p_Y + \beta_{AY} p_{AY}
 $$
 
-Scenario: we find an association between $A$ and $Y$ in our ascertained sample. Our question is what effects must $A$ and $Y$ have on sample ascertainment in order to induce the observed odds ratio $OR$, assuming that the true odds ratio is 1.
+Scenario: we find an association between $A$ and $Y$ in our ascertained sample. Our question is what effects must $A$ and $Y$ have on sample ascertainment in order to induce the observed odds ratio $\operatorname{OR}$, assuming that the true odds ratio is 1.
 
 Initialise a new `VBB` (**V**-structure, **B**inary exposure, **B**inary outcome) class
 
@@ -107,7 +107,7 @@ plot3Drgl::plotrgl()
 
 Here, $A$ is ACE inhibitor use, $Y$ is Covid-19 status, and $S$ is presence in the first release of the COVID Symptom Tracker dataset.
 
-Observational association of ACE-i influence on Covid-19 status gives OR $\approx 2$. Assume 7.8% of population take ACE-i, 10% are infected with coronavirus at the time of sampling, 1.9 million of an adult population of 54 million are present in the sample (3.5%). What influences of ACE-inhibitor use and Covid-19 status would be required to induce a collider bias of $OR=2$?
+Observational association of ACE-i influence on Covid-19 status gives OR $\approx 2$. Assume 7.8% of population take ACE-i, 10% are infected with coronavirus at the time of sampling, 1.9 million of an adult population of 54 million are present in the sample (3.5%). What influences of ACE-inhibitor use and Covid-19 status would be required to induce a collider bias of $\operatorname{OR}=2$?
 
 Enter parameters without interactions to reduce the paramater space for now:
 
