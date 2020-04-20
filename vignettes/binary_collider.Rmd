@@ -1,6 +1,6 @@
 ---
 title: "Collider bias for binary variables"
-output: rmarkdown::html_vignette
+output: bookdown::html_vignette2
 vignette: >
   %\VignetteIndexEntry{Collider bias for binary variables}
   %\VignetteEngine{knitr::rmarkdown}
