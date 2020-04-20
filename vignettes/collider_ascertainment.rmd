@@ -134,6 +134,7 @@ Is the same.. why?
 Now make x binary. This also changes its mean and variance. Change y variance also
 
 ```{r}
+set.seed(12345)
 n <- 100000
 maf <- 0.3
 x <- rbinom(n, 2, maf)
