@@ -330,6 +330,7 @@ $$
 So Vx = 2m(1-m), Vy is fixed, and Vs will depend on Vx and the effects.
 
 ```{r}
+set.seed(12345)
 n <- 10000
 maf <- 0.3
 rsq_gs <- 0.1
