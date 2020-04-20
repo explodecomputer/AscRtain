@@ -314,11 +314,11 @@ $$
 So now we need to present betas in terms of variances. What explains $S$?
 
 $$
-\begin{align}
+\begin{aligned}
 S_i &= \beta_{SX} X_i + \beta_{SY} Y_i + e_i \\
 R^2_{S} &= \frac{2 \beta^2_{SX} m(1-m) + \beta^2_{SY} Var(Y)}{Var(Y)} \\
 V_S &= \frac{2\beta^2_{SX} m(1-m) + \beta^2_{SY}Var(Y)}{R^2_S}
-\end{align}
+\end{aligned}
 $$
 
 So Vx = 2m(1-m), Vy is fixed, and Vs will depend on Vx and the effects.
