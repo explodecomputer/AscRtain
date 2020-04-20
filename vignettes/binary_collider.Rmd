@@ -133,6 +133,7 @@ Within our sample the prevalence of ACEi use is 4.2%. In the general population 
 Need to figure out what value of $\beta_A$ could give rise to the difference in prevalences between population and sample/
 
 ```{r}
+set.seed(20200420)
 n <- 1000000
 Y <- rbinom(n, 1, 0.1)
 A <- rbinom(n, 1, 0.078)
