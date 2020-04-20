@@ -17,8 +17,7 @@ Suggests:
     testthat (>= 2.1.0),
     rmarkdown,
     covr,
-    ggnewscale,
-    bookdown
+    ggnewscale
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.0
 Imports: 
