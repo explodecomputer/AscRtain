@@ -29,10 +29,10 @@ knitr::opts_chunk$set(echo=TRUE, message=FALSE, warning=FALSE, dev="png")
 ```
 
 \(
-\newcommand{\var}[1]{\text{var}\left(#1\right)}
+\newcommand{\var}[1]{\operatorname{var}\left(#1\right)}
 \newcommand{\E}[1]{\mathbb{E}\left[#1\right]}
-\newcommand{\cov}[2]{\text{cov}\left(#1, #2\right)}
-\newcommand{\logit}[1]{\text{logit}\left(#1\right)}
+\newcommand{\logit}[1]{\operatorname{logit}\left(#1\right)}
+\DeclareMathOperator{\cov}{cov}
 \)
 
 The purpose of expanding sample sizes for genome-wide association studies, now happening at a rapid rate with the advent of population scale biobanks, is to detect more and more genetic variants associated with complex traits of interest. With 5 million samples, the effect sizes detectable are extremely small. While this provides exquisite power to detect extremely small effects, it opens up new avenues of subtle bias. One such problem arises because the recruited individuals are not representative of the general population. If they are ascertained, for example for higher education levels, collider bias will induce correlations amongst all the causes of higher education levels within the sample. This problem is typically ignored because the magnitude of the collider bias is relatively small, and unlikely to be detectable at genome-wide significance thresholds. However, with extreme statistical power that safety may disappear.
@@ -67,7 +67,8 @@ Given the relationship between education and recruitment, we can parameterise th
 * $\delta$ - how strongly education influences recruitment, 
 * $\beta_{GS}$ - the effect of a genetic variant on education,
 * $\beta_{XS}$ - the effect of a factor for education on education,
-* $m$ - allele frequency of the genetic variant as $\sigma^2_{G}) = 2m(1-m)$,
+* $m$ - allele frequency of the genetic variant
+* $\sigma^2_{G} = 2m(1-m)$,
 * $\sigma^2_{X}$ - the variance of the factor for education,
 * $\sigma^2_{S}$ - the variance of educational attainment
 
@@ -75,11 +76,11 @@ Given the relationship between education and recruitment, we can parameterise th
 The value of $Z$ indicates if an individual is present in the sample, and this is a function of 
 
 $$
-\sigma_{GZ} = \cov{G, \frac{p}{1-p}\delta S}
+\sigma_{GZ} = \cov\left(G,\frac{p}{1-p}\delta S\right)
 $$
 
 $$
-\widehat{\beta}_{GX} = \frac{\sigma_{GX}/2m(1-m) - cov(G, \frac{p}{1-p}\delta S)cov(X, \frac{p}{1-p}\delta S) / \sigma_{Z}^2}{1 - (cov(G, \frac{p}{1-p}\delta S)/\sigma_{Z})^2}
+\widehat{\beta}_{GX} = \frac{\sigma_{GX}/2m(1-m) - \cov(G, \frac{p}{1-p}\delta S)\cov(X, \frac{p}{1-p}\delta S) / \sigma_{Z}^2}{1 - \left(\cov(G, \frac{p}{1-p}\delta S)/\sigma_{Z}\right)^2}
 $$
 
 
@@ -240,11 +241,11 @@ Can we present in terms of $s$ instead of $z$?
 What is cov(x,z) in terms of cov(x,s)
 
 $$
-\cov{X,Z} = \cov{X,\beta S}
+\cov(X,Z) = \cov(X,\beta S)
 $$
 
 $$
-\beta = \frac{\cov{S,Z}}{\var{S}}
+\beta = \frac{\cov(S,Z)}{\var{S}}
 $$
 
 ```{r}
@@ -322,8 +323,8 @@ So now we need to present betas in terms of variances. What explains $S$?
 $$
 \begin{aligned}
 S_i &= \beta_{SX} X_i + \beta_{SY} Y_i + e_i \\
-R^2_{S} &= \frac{2 \beta^2_{SX} m(1-m) + \beta^2_{SY} \var{Y}{\var{Y}} \\
-V_S &= \frac{2\beta^2_{SX} m(1-m) + \beta^2_{SY}\var{Y}}{R^2_S}
+R^2_{S} &= \frac{2 \beta^2_{SX} m(1-m) + \beta^2_{SY} \var{Y}}{\var{Y}} \\
+V_S &= \frac{2\beta^2_{SX} m(1-m) + \beta^2_{SY}\var{Y}}{R^2_S} \\
 \end{aligned}
 $$
 
@@ -417,7 +418,6 @@ bh_sz = cov(s,z)/var(s)
 How to test power. Two different ways, just use the native version
 
 ```{r}
-
 param <- expand.grid(
   rsq = seq(0.001, 0.4, by=0.001),
   n = c(100,1000, 10000)
@@ -541,7 +541,7 @@ beta / mut
 ---
 
 $$
-cov(s,z) = p(1-p) \left[E(s | z = 1) - E(s | z = 0)\right]
+\cov(s,z) = p(1-p) \left(\E{s | z = 1} - \E{s | z = 0}\right)
 $$
 
-Here $p$ is the proportion of individuals in the popoulation recruited into the sample. For simplicity call $\delta = E(s | z = 1) - E(s | z = 0)$ the difference in mean educational attainment values between individuals recruited and not recruited into the study.
+Here $p$ is the proportion of individuals in the popoulation recruited into the sample. For simplicity call $\delta = \E{s | z = 1} - \E{s | z = 0}$ the difference in mean educational attainment values between individuals recruited and not recruited into the study.
