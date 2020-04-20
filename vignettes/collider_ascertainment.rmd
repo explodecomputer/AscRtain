@@ -361,7 +361,7 @@ $$
 and
 
 $$
-e_i \sim N\left(0, Var(S) - \beta_{XS}^2 Var(X) - 2 \beta_{GS}^2 m(1-m) \right)
+e_i \sim N\left(0, \var{S} - \beta_{XS}^2 \var{X} - 2 \beta_{GS}^2 m(1-m) \right)
 $$
 
 Remove data, just parameters.
@@ -388,6 +388,7 @@ ve <- vs - b_xs^2 * 2*maf*(1-maf) - b_ys^2 * vy
 alpha <- log((1 - prop)/prop)
 
 # generate
+set.seed(678910)
 y <- rnorm(n)
 x <- rbinom(n, 2, maf)
 s <- x * b_xs + y * b_ys + rnorm(n, sd=sqrt(ve))
