@@ -307,7 +307,6 @@ $$
 \begin{aligned}
 \hat{\beta}_{xy|s} &= \frac{\beta_{xy} \sigma^2_{s} \sigma^2_{x} - \beta_{xs} \beta_{ys} \sigma^2_x \sigma^2_y}{\beta^2_{ys} \sigma^2_x \sigma^2_y + \sigma^2_s \sigma^2_x} \\
 \hat{\beta}_{xy|z} &= \frac{\beta_{xy} \sigma^2_{s} 2m(1-m) - \beta_{xs} \beta_{ys} log(OR_{sz})^2 p^2(1-p)^2 2m(1-m) \sigma^2_y}{\beta^2_{ys}log(OR_{SZ}) 2m(1-m) \sigma^2_y + \sigma^2_s 2m(1-m)} \\
-
 \end{aligned}
 $$
 
