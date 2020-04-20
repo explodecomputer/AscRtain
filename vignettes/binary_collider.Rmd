@@ -150,7 +150,10 @@ Likely somewhere between $-0.1$ and $-0.2$.
 
 ```{r}
 x$scatter() +
-ggplot2::labs(x="Effect of ACE-i on inclusion probability (bA)", y="Effect of Covid-19 on inclusion probability (bY)", colour="Baseline inclusion\nprobability (b0)") +
+ggplot2::labs(x = expression(paste("Effect of ACE-i on inclusion probability (", beta[A],")")), 
+              y = expression(paste("Effect of Covid-19 on inclusion probability (", beta[Y],")")), 
+              colour = expression(paste("Baseline inclusion\nprobability", (beta[0]), sep = "  "))) +
+ggplot2::theme(legend.title.align = 0.5) + 
 ggplot2::annotate("rect", xmin=-0.01, xmax=-0.02, ymin=-Inf, ymax=Inf, alpha=0.4)
 ```
 
