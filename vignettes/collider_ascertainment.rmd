@@ -350,12 +350,12 @@ cor(x, s)^2
 ```
 
 $$
-\beta_{GS} = \sqrt{\frac{R^2_{GS} Var(S)}{2m(1-m)}}
+\beta_{GS} = \sqrt{\frac{R^2_{GS} \var{S}}{2m(1-m)}}
 $$
 and
 
 $$
-\beta_{XS} = \sqrt{\frac{R^2_{XS} Var(S)}{Var(X)}}
+\beta_{XS} = \sqrt{\frac{R^2_{XS} \var{S}}{\var{X}}}
 $$
 
 and
