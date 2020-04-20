@@ -14,6 +14,7 @@
 #' @param sig.level Alpha threshold for power calculation. Default = `5e-8`
 #'
 #' @export
+#' @importFrom stats pnorm power.anova.test
 #' @return List of simulation results
 simulate_y_structure <- function(n, prop, or_sz, b_xy, rsq_xs, rsq_ys, vx=1, vy=1, vs=1, sig.level=5e-8)
 {
@@ -97,6 +98,7 @@ plot_simulate_y_structure <- function(prop, b_xy_thresh, or_sz_range=c(1,100), b
 #' @param max_or_sz Maximum OR_sz to allow in optimisation.
 #'
 #' @export
+#' @importFrom stats optimize
 #' @return ggplot of simulations
 plot_simulate_y_structure_optim <- function(prop, b_xy_thresh, b_xy=0, rsq_xs_range=c(0,1), rsq_ys_range=c(0,1), gran=101, max_or_sz=20)
 {
