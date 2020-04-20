@@ -48,13 +48,13 @@ VBB <- R6Class("VBB", list(
 	#' @param pA \eqn{P(A = 1)} in the general population
 	#' @param pY \eqn{P(Y = 1)} in the general population
 	#' @param pAY \eqn{P(A = 1, Y = 1)} in the general population
-	#' @param b0_range Baseline probability of being selected. Provide a range of values to explore e.g. c(0,1)
-	#' @param ba_range Effect of A on being selected into the sample. Provide a range of values to explore e.g. c(-0.2, 0.2)
-	#' @param by_range Effect of Y on being selected into the sample. Provide a range of values to explore e.g. c(-0.2, 0.2)
-	#' @param bay_range Effect of AY interaction on being selected into the sample. Provide a range of values to explore e.g. c(-0.2, 0.2)
-	#' @param granularity Granularity of the search space. Default=100, going much higher can be computationally difficult
-	#' @param pS_tol Tolerance of pS value Default=0.0025
-	#' @return Data frame of parameters that satisfy the target_or and target pS values
+	#' @param b0_range Baseline probability of being selected. Provide a range of values to explore e.g. `c(0,1)`
+	#' @param ba_range Effect of A on being selected into the sample. Provide a range of values to explore e.g. `c(-0.2, 0.2)`
+	#' @param by_range Effect of Y on being selected into the sample. Provide a range of values to explore e.g. `c(-0.2, 0.2)`
+	#' @param bay_range Effect of AY interaction on being selected into the sample. Provide a range of values to explore e.g. `c(-0.2, 0.2)`
+	#' @param granularity Granularity of the search space. Default=`100`, going much higher can be computationally difficult
+	#' @param pS_tol Tolerance of pS value Default=`0.0025`
+	#' @return Data frame of parameters that satisfy the `target_or` and target `pS` values
 	parameter_space = function(target_or, pS, pA, pY, pAY, b0_range, ba_range, by_range, bay_range, granularity=100, pS_tol=0.0025)
 	{
 		s <- sign(log(target_or))
@@ -84,16 +84,16 @@ VBB <- R6Class("VBB", list(
 	},
 
 	#' @description
-	#' 3D scatterplot of output from parameter_space function. See plot3D::scatter3D for info on parameters
-	#' @param ticktype Default="detailed"
-	#' @param theta Default=130
-	#' @param phi Default=0
-	#' @param bty Default="g"
-	#' @param xlab Default="ba"
-	#' @param ylab Default="by"
-	#' @param zlab Default="b0"
-	#' @param clab Default="OR"
-	#' @param ... Further parameters to be passed to plot3D::scatter3D
+	#' 3D scatterplot of output from `parameter_space` function. See [`plot3D::scatter3D`] for info on parameters
+	#' @param ticktype Default=`"detailed"`
+	#' @param theta Default=`130`
+	#' @param phi Default=`0`
+	#' @param bty Default=`"g"`
+	#' @param xlab Default=`"ba"`
+	#' @param ylab Default=`"by"`
+	#' @param zlab Default=`"b0"`
+	#' @param clab Default=`"OR"`
+	#' @param ... Further parameters to be passed to [`plot3D::scatter3D`]
 	#' @return Scatterplot
 	scatter3d = function(ticktype="detailed", theta=130, phi=0, bty="g", xlab="ba", ylab="by", zlab="b0", clab="OR", ...)
 	{
@@ -101,7 +101,7 @@ VBB <- R6Class("VBB", list(
 	},
 
 	#' @description
-	#' Simple scatterplot of output from parameter_space function. Plotted are the parameter values of b0, ba and by that can give rise to an OR >= target_or
+	#' Simple scatterplot of output from parameter_space function. Plotted are the parameter values of `b0`, `ba` and `by` that can give rise to an OR \eqn{\ge} `target_or`
 	scatter = function()
 	{
 		ggplot2::ggplot(self$param, ggplot2::aes(x=ba, y=by)) +
@@ -110,7 +110,7 @@ VBB <- R6Class("VBB", list(
 
 	#' @description
 	#' Histogram of odds ratios across the range of parameter values
-	#' @param bins How many bins to split histogram. Default=30
+	#' @param bins How many bins to split histogram. Default=`30`
 	#'
 	#' @return ggplot object
 	histogram = function(bins=30)
