@@ -28,9 +28,16 @@ suppressWarnings(suppressPackageStartupMessages({
 knitr::opts_chunk$set(echo=TRUE, message=FALSE, warning=FALSE, dev="png")
 ```
 
+\(
+\newcommand{\var}[1]{\operatorname{var}\left(#1\right)}
+\newcommand{\E}[1]{\mathbb{E}\left[#1\right]}
+\newcommand{\logit}[1]{\operatorname{logit}\left(#1\right)}
+\DeclareMathOperator{\cov}{cov}
+\)
+
 The purpose of expanding sample sizes for genome-wide association studies, now happening at a rapid rate with the advent of population scale biobanks, is to detect more and more genetic variants associated with complex traits of interest. With 5 million samples, the effect sizes detectable are extremely small. While this provides exquisite power to detect extremely small effects, it opens up new avenues of subtle bias. One such problem arises because the recruited individuals are not representative of the general population. If they are ascertained, for example for higher education levels, collider bias will induce correlations amongst all the causes of higher education levels within the sample. This problem is typically ignored because the magnitude of the collider bias is relatively small, and unlikely to be detectable at genome-wide significance thresholds. However, with extreme statistical power that safety may disappear.
 
-The UK has a population of 50 million adults. In the next major genotyping effort, 5 million will be sampled and genotyped. In principle this is to improve statistical power for GWAS. In many cases the GWAS signals of interest are only those that are very strongly associated, e.g. with $p < 5e^{-8}$. This likely guards against a lot of the potential problems that can arise due to subtle sampling issues such as collider bias in ascertained samples.
+The UK has a population of 50 million adults. In the next major genotyping effort, 5 million will be sampled and genotyped. In principle this is to improve statistical power for GWAS. In many cases the GWAS signals of interest are only those that are very strongly associated, e.g. with $p < 5\times10^{-8}$. This likely guards against a lot of the potential problems that can arise due to subtle sampling issues such as collider bias in ascertained samples.
 
 **Question:** When power to detect very small effects gets large, is the problem of collider bias arising due to ascertainment in GWAS now a realistic problem?
 
@@ -39,19 +46,19 @@ The UK has a population of 50 million adults. In the next major genotyping effor
 Use educational attainment ($S$) as the variable that influences ascertainment, and ascertainment is a binary variable $z$ which indicates if the individual is in the sample. Suppose that educational attainment influences the probability of being recruited into the sample, or at least having non-missing data in the sample. The logistic function can be used to model the relationship of influence of educational attainment on being sampled
 
 $$
-logit(\mu_i) = \alpha + \delta S_i
+\logit{\mu_i} = \alpha + \delta S_i
 $$
 
 where $\mu_i$ is the probability for the $i$th individual being included in the sample based on their value of $S$, and the intercept $\alpha$ indicates the proportion of individuals in the population who are sampled, $p$ by:
 
 $$
-p = \frac{1}{1 + e^{-\alpha}}
+p = \frac{1}{1 + \exp{-\alpha}}
 $$
 
 The (biased) estimate of the effect of a genetic variant ($G$) on some predictor of education ($X$), when estimated only amongst recruited samples ($Z = 1$), is given by
 
 $$
-\hat{\beta}_{GX} = \frac{\sigma_{GX}/\sigma_{G} - \sigma_{GZ}\sigma_{XZ} / \sigma_{Z}^2}{1 - (\sigma_{GZ}/\sigma_{Z})^2}
+\widehat{\beta}_{GX} = \frac{\sigma_{GX}/\sigma_{G} - \sigma_{GZ}\sigma_{XZ} / \sigma_{Z}^2}{1 - (\sigma_{GZ}/\sigma_{Z})^2}
 $$
 
 Given the relationship between education and recruitment, we can parameterise the bias in terms of:
@@ -60,19 +67,20 @@ Given the relationship between education and recruitment, we can parameterise th
 * $\delta$ - how strongly education influences recruitment, 
 * $\beta_{GS}$ - the effect of a genetic variant on education,
 * $\beta_{XS}$ - the effect of a factor for education on education,
-* $m$ - allele frequency of the genetic variant as $\sigma^2_{G}) = 2m(1-m)$,
-* $\sigma^2_{X} - the variance of the factor for education,
-* $\sigma^2_{S} - the variance of educational attainment
+* $m$ - allele frequency of the genetic variant
+* $\sigma^2_{G} = 2m(1-m)$,
+* $\sigma^2_{X}$ - the variance of the factor for education,
+* $\sigma^2_{S}$ - the variance of educational attainment
 
 
 The value of $Z$ indicates if an individual is present in the sample, and this is a function of 
 
 $$
-\sigma_{GZ} = cov(G, \frac{p}{1-p}\delta S)
+\sigma_{GZ} = \cov\left(G,\frac{p}{1-p}\delta S\right)
 $$
 
 $$
-\hat{\beta}_{GX} = \frac{\sigma_{GX}/2m(1-m) - cov(G, \frac{p}{1-p}\delta S)cov(X, \frac{p}{1-p}\delta S) / \sigma_{Z}^2}{1 - (cov(G, \frac{p}{1-p}\delta S)/\sigma_{Z})^2}
+\widehat{\beta}_{GX} = \frac{\sigma_{GX}/2m(1-m) - \cov(G, \frac{p}{1-p}\delta S)\cov(X, \frac{p}{1-p}\delta S) / \sigma_{Z}^2}{1 - \left(\cov(G, \frac{p}{1-p}\delta S)/\sigma_{Z}\right)^2}
 $$
 
 
@@ -81,13 +89,13 @@ There are two different methods for estimating the collider effect.
 Groenwold, Palmer and Tilling (2020, https://osf.io/vrcuf/) gives:
 
 $$
-\hat{\beta}_{xy|s} = \frac{\beta_{xy} \sigma^2_{s} \sigma^2_{x} - \beta_{xs} \beta_{ys} \sigma^2_x \sigma^2_y}{\beta^2_{ys} \sigma^2_x \sigma^2_y + \sigma^2_s \sigma^2_x}
+\widehat{\beta}_{xy|s} = \frac{\beta_{xy} \sigma^2_{s} \sigma^2_{x} - \beta_{xs} \beta_{ys} \sigma^2_x \sigma^2_y}{\beta^2_{ys} \sigma^2_x \sigma^2_y + \sigma^2_s \sigma^2_x}
 $$
 
 Pearl (2013, https://ftp.cs.ucla.edu/pub/stat_ser/r409_submitted_corrected.pdf) gives:
 
 $$
-\hat{\beta}_{xy|s} = \frac{\sigma_{xy} - \sigma_{sy} \sigma_{sx}}{1 - \sigma^2_{sx}}
+\widehat{\beta}_{xy|s} = \frac{\sigma_{xy} - \sigma_{sy} \sigma_{sx}}{1 - \sigma^2_{sx}}
 $$
 
 This assumes error terms are equal I think.
@@ -95,13 +103,13 @@ This assumes error terms are equal I think.
 I get differing results between these solutions when the variances of $x$ and $y$ change. An alternative to the first one is:
 
 $$
-\hat{\beta}_{xy|s} = \frac{\beta_{xy} \sigma^2_{s} \sigma^2_{x} - \beta_{xs} \beta_{ys} \sigma^2_x \sigma^2_y}{\beta^2_{ys} \sigma^2_x \sigma^2_y + \sigma^2_x}
+\widehat{\beta}_{xy|s} = \frac{\beta_{xy} \sigma^2_{s} \sigma^2_{x} - \beta_{xs} \beta_{ys} \sigma^2_x \sigma^2_y}{\beta^2_{ys} \sigma^2_x \sigma^2_y + \sigma^2_x}
 $$
 
 Simulate continuous collider that influences a continuous conditioning variable
 
 ```{r}
-
+set.seed(20200420)
 n <- 100000
 x <- rnorm(n)
 y <- rnorm(n)
@@ -134,6 +142,7 @@ Is the same.. why?
 Now make x binary. This also changes its mean and variance. Change y variance also
 
 ```{r}
+set.seed(12345)
 n <- 100000
 maf <- 0.3
 x <- rbinom(n, 2, maf)
@@ -232,11 +241,11 @@ Can we present in terms of $s$ instead of $z$?
 What is cov(x,z) in terms of cov(x,s)
 
 $$
-cov(X,Z) = cov(X,\beta S)
+\cov(X,Z) = \cov(X,\beta S)
 $$
 
 $$
-\beta = cov(S,Z) / var(S)
+\beta = \frac{\cov(S,Z)}{\var{S}}
 $$
 
 ```{r}
@@ -304,9 +313,8 @@ Quick recap:
 
 $$
 \begin{aligned}
-\hat{\beta}_{xy|s} &= \frac{\beta_{xy} \sigma^2_{s} \sigma^2_{x} - \beta_{xs} \beta_{ys} \sigma^2_x \sigma^2_y}{\beta^2_{ys} \sigma^2_x \sigma^2_y + \sigma^2_s \sigma^2_x} \\
-\hat{\beta}_{xy|z} &= \frac{\beta_{xy} \sigma^2_{s} 2m(1-m) - \beta_{xs} \beta_{ys} log(OR_{sz})^2 p^2(1-p)^2 2m(1-m) \sigma^2_y}{\beta^2_{ys}log(OR_{SZ}) 2m(1-m) \sigma^2_y + \sigma^2_s 2m(1-m)} \\
-
+\widehat{\beta}_{xy|s} &= \frac{\beta_{xy} \sigma^2_{s} \sigma^2_{x} - \beta_{xs} \beta_{ys} \sigma^2_x \sigma^2_y}{\beta^2_{ys} \sigma^2_x \sigma^2_y + \sigma^2_s \sigma^2_x} \\
+\widehat{\beta}_{xy|z} &= \frac{\beta_{xy} \sigma^2_{s} 2m(1-m) - \beta_{xs} \beta_{ys} \log{\text{OR}_{sz}}^2 p^2(1-p)^2 2m(1-m) \sigma^2_y}{\beta^2_{ys}\log{\text{OR}_{SZ}} 2m(1-m) \sigma^2_y + \sigma^2_s 2m(1-m)} \\
 \end{aligned}
 $$
 
@@ -315,14 +323,15 @@ So now we need to present betas in terms of variances. What explains $S$?
 $$
 \begin{aligned}
 S_i &= \beta_{SX} X_i + \beta_{SY} Y_i + e_i \\
-R^2_{S} &= \frac{2 \beta^2_{SX} m(1-m) + \beta^2_{SY} Var(Y)}{Var(Y)} \\
-V_S &= \frac{2\beta^2_{SX} m(1-m) + \beta^2_{SY}Var(Y)}{R^2_S}
+R^2_{S} &= \frac{2 \beta^2_{SX} m(1-m) + \beta^2_{SY} \var{Y}}{\var{Y}} \\
+V_S &= \frac{2\beta^2_{SX} m(1-m) + \beta^2_{SY}\var{Y}}{R^2_S} \\
 \end{aligned}
 $$
 
 So Vx = 2m(1-m), Vy is fixed, and Vs will depend on Vx and the effects.
 
 ```{r}
+set.seed(12345)
 n <- 10000
 maf <- 0.3
 rsq_gs <- 0.1
@@ -342,18 +351,18 @@ cor(x, s)^2
 ```
 
 $$
-\beta_{GS} = \sqrt{\frac{R^2_{GS} Var(S)}{2m(1-m)}}
+\beta_{GS} = \sqrt{\frac{R^2_{GS} \var{S}}{2m(1-m)}}
 $$
 and
 
 $$
-\beta_{XS} = \sqrt{\frac{R^2_{XS} Var(S)}{Var(X)}}
+\beta_{XS} = \sqrt{\frac{R^2_{XS} \var{S}}{\var{X}}}
 $$
 
 and
 
 $$
-e_i \sim N\left(0, Var(S) - \beta_{XS}^2 Var(X) - 2 \beta_{GS}^2 m(1-m) \right)
+e_i \sim N\left(0, \var{S} - \beta_{XS}^2 \var{X} - 2 \beta_{GS}^2 m(1-m) \right)
 $$
 
 Remove data, just parameters.
@@ -380,6 +389,7 @@ ve <- vs - b_xs^2 * 2*maf*(1-maf) - b_ys^2 * vy
 alpha <- log((1 - prop)/prop)
 
 # generate
+set.seed(678910)
 y <- rnorm(n)
 x <- rbinom(n, 2, maf)
 s <- x * b_xs + y * b_ys + rnorm(n, sd=sqrt(ve))
@@ -408,7 +418,6 @@ bh_sz = cov(s,z)/var(s)
 How to test power. Two different ways, just use the native version
 
 ```{r}
-
 param <- expand.grid(
   rsq = seq(0.001, 0.4, by=0.001),
   n = c(100,1000, 10000)
@@ -532,7 +541,7 @@ beta / mut
 ---
 
 $$
-cov(s,z) = p(1-p) \left[E(s | z = 1) - E(s | z = 0)\right]
+\cov(s,z) = p(1-p) \left(\E{s | z = 1} - \E{s | z = 0}\right)
 $$
 
-Here $p$ is the proportion of individuals in the popoulation recruited into the sample. For simplicity call $\delta = E(s | z = 1) - E(s | z = 0)$ the difference in mean educational attainment values between individuals recruited and not recruited into the study.
+Here $p$ is the proportion of individuals in the popoulation recruited into the sample. For simplicity call $\delta = \E{s | z = 1} - \E{s | z = 0}$ the difference in mean educational attainment values between individuals recruited and not recruited into the study.

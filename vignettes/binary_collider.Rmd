@@ -25,13 +25,13 @@ Following https://osf.io/vrcuf/, can infer the biased OR for a binary exposure (
 Assume that being present in the sample is simply:
 
 $$
-P(S = 1 | A,Y) = \beta_0 + \beta_A A + \beta_Y Y + \beta_{AY} AY
+\mathbb{P}(S = 1 | A,Y) = \beta_0 + \beta_A A + \beta_Y Y + \beta_{AY} AY
 $$
 
 where $A = {0,1}$ and $Y = {0,1}$. The expected odds ratio under this scenario is then:
 
 $$
-E[\hat{OR}_{S=1}] = \frac{\beta_0(\beta_0 + \beta_A + \beta_Y + \beta_{AY})}{(\beta_0 + \beta_A)(\beta_0 + \beta_Y)}
+\mathbb{E}\left[\widehat{\operatorname{OR}}_{S=1}\right] = \frac{\beta_0(\beta_0 + \beta_A + \beta_Y + \beta_{AY})}{(\beta_0 + \beta_A)(\beta_0 + \beta_Y)}
 $$
 
 Suppose that we know the fraction of the population that is present in our sample ($p_{S}$). We are only interested in the $\beta_*$ parameter values that give rise to a value of $p_{S}$ that is within the bounds of expectation:
@@ -40,7 +40,7 @@ $$
 p_{S} = \beta_0 + \beta_A p_A + \beta_Y p_Y + \beta_{AY} p_{AY}
 $$
 
-Scenario: we find an association between $A$ and $Y$ in our ascertained sample. Our question is what effects must $A$ and $Y$ have on sample ascertainment in order to induce the observed odds ratio $OR$, assuming that the true odds ratio is 1.
+Scenario: we find an association between $A$ and $Y$ in our ascertained sample. Our question is what effects must $A$ and $Y$ have on sample ascertainment in order to induce the observed odds ratio $\operatorname{OR}$, assuming that the true odds ratio is 1.
 
 Initialise a new `VBB` (**V**-structure, **B**inary exposure, **B**inary outcome) class
 
@@ -107,7 +107,7 @@ plot3Drgl::plotrgl()
 
 Here, $A$ is ACE inhibitor use, $Y$ is Covid-19 status, and $S$ is presence in the first release of the COVID Symptom Tracker dataset.
 
-Observational association of ACE-i influence on Covid-19 status gives OR $\approx 2$. Assume 7.8% of population take ACE-i, 10% are infected with coronavirus at the time of sampling, 1.9 million of an adult population of 54 million are present in the sample (3.5%). What influences of ACE-inhibitor use and Covid-19 status would be required to induce a collider bias of $OR=2$?
+Observational association of ACE-i influence on Covid-19 status gives OR $\approx 2$. Assume 7.8% of population take ACE-i, 10% are infected with coronavirus at the time of sampling, 1.9 million of an adult population of 54 million are present in the sample (3.5%). What influences of ACE-inhibitor use and Covid-19 status would be required to induce a collider bias of $\operatorname{OR}=2$?
 
 Enter parameters without interactions to reduce the paramater space for now:
 
@@ -133,6 +133,7 @@ Within our sample the prevalence of ACEi use is 4.2%. In the general population 
 Need to figure out what value of $\beta_A$ could give rise to the difference in prevalences between population and sample/
 
 ```{r}
+set.seed(20200420)
 n <- 1000000
 Y <- rbinom(n, 1, 0.1)
 A <- rbinom(n, 1, 0.078)
@@ -150,7 +151,9 @@ Likely somewhere between $-0.1$ and $-0.2$.
 
 ```{r}
 x$scatter() +
-ggplot2::labs(x="Effect of ACE-i on inclusion probability (bA)", y="Effect of Covid-19 on inclusion probability (bY)", colour="Baseline inclusion\nprobability (b0)") +
+ggplot2::labs(x = expression(paste("Effect of ACE-i on inclusion probability (", beta[A],")")), 
+              y = expression(paste("Effect of Covid-19 on inclusion probability (", beta[Y],")")), 
+              colour = expression(paste("Baseline inc. prob. ", (beta[0])))) +
 ggplot2::annotate("rect", xmin=-0.01, xmax=-0.02, ymin=-Inf, ymax=Inf, alpha=0.4)
 ```
 
@@ -159,8 +162,6 @@ Now that we can fix the $\beta_A$ parameter to 0.015, we can introduce the inter
 We can also ask - is our association actually more likely to be attenuated to OR=2, rather than inflated from OR=1. Let's search the parameter space for parameter sets that give OR=0.8 and superimpose on the figure.
 
 ```{r}
-
-
 x <- VBB$new()
 x$parameter_space(	
 	target_or=2, 
@@ -189,13 +190,15 @@ x1$parameter_space(
 	granularity=200
 )
 
-x$param %>% ggplot(., aes(x=bay, y=by)) +
-geom_point(aes(colour=b0)) +
-labs(colour="Baseline inclusion\nprobability (b0)\n(OR>2)") +
-new_scale_colour() +
-ggplot2::geom_point(data=x1$param, aes(colour=b0)) +
-scale_colour_gradient(low="white", high="red") +
-ggplot2::labs(x="Effect of ACE-i AND Covid-19 on inclusion probability (bAY)", y="Effect of Covid-19 on inclusion probability (bY)", colour="Baseline inclusion\nprobability (b0)\n(OR<0.8)")
+x$param %>% ggplot2::ggplot(., aes(x = bay, y = by)) +
+  ggplot2::geom_point(aes(colour = b0)) +
+  ggplot2::labs(colour = expression(paste("Baseline inc. prob. ", (beta[0]), " OR > 2"))) +
+  ggnewscale::new_scale_colour() +
+  ggplot2::geom_point(data = x1$param, aes(colour = b0)) +
+  ggplot2::scale_colour_gradient(low = "white", high = "red") +
+  ggplot2::labs(x = expression(paste("Effect of ACE-i AND Covid-19 on inclusion probability (", beta[AY],")")), 
+                y = expression(paste("Effect of Covid-19 on inclusion probability (", beta[Y], ")")), 
+                colour = expression(paste("Baseline inc. prob. ", (beta[0]), " OR < 0.8")))
 ```
 
 So it could go either way really, a lot of the figure is shaded in both blue and red, and we don't know what the actual selection based on covid is. This indicates that it is really not reliable to be making claims about causality from this type of sampling.
@@ -330,4 +333,3 @@ summary(glm(Y ~ A, family="binomial", subset=S==1, weight=1/probs4))$coef[2] %>%
 summary(glm(Y ~ A, family="binomial", subset=S==1, weight=1/probs3))$coef[2] %>% exp
 summary(glm(Y ~ A, family="binomial", subset=S==1, weight=1/probs2))$coef[2] %>% exp
 ```
-

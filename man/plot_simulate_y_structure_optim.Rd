@@ -19,13 +19,13 @@ plot_simulate_y_structure_optim(
 
 \item{b_xy_thresh}{Target b_xy association - e.g. what value of b_xy are you suspicious could be due to ascertainment on a collider}
 
-\item{b_xy}{Suspected true X-Y effect. Default = 0}
+\item{b_xy}{Suspected true X-Y effect. Default = \code{0}}
 
-\item{rsq_xs_range}{Range of rsq_xs values to enumerate over. Default = c(0,1)}
+\item{rsq_xs_range}{Range of rsq_xs values to enumerate over. Default = \code{c(0,1)}}
 
-\item{rsq_ys_range}{Range of rsq_ys values to enumerate over. Default = c(0,1)}
+\item{rsq_ys_range}{Range of rsq_ys values to enumerate over. Default = \code{c(0,1)}}
 
-\item{gran}{Granularity of ranges. Default = 101}
+\item{gran}{Granularity of ranges. Default = \code{101}}
 
 \item{max_or_sz}{Maximum OR_sz to allow in optimisation.}
 }

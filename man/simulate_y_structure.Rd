@@ -30,13 +30,13 @@ simulate_y_structure(
 
 \item{rsq_ys}{Variance explained by Y on collider variable S}
 
-\item{vx}{Variance of X. Default = 1.}
+\item{vx}{Variance of X. Default = \code{1}.}
 
-\item{vy}{Variance of Y. Default = 1.}
+\item{vy}{Variance of Y. Default = \code{1}.}
 
-\item{vs}{Variance of S. Default = 1.}
+\item{vs}{Variance of S. Default = \code{1}.}
 
-\item{sig.level}{Alpha threshold for power calculation. Default = 5e-8}
+\item{sig.level}{Alpha threshold for power calculation. Default = \code{5e-8}}
 }
 \value{
 List of simulation results

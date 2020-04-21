@@ -19,15 +19,15 @@ plot_simulate_y_structure(
 
 \item{b_xy_thresh}{Target b_xy association - e.g. what value of b_xy are you suspicious could be due to ascertainment on a collider}
 
-\item{or_sz_range}{Range of OR_sz values to enumerate over. Default = c(1,100)}
+\item{or_sz_range}{Range of OR_sz values to enumerate over. Default = \code{c(1,100)}}
 
-\item{b_xy}{Suspected true X-Y effect. Default = 0}
+\item{b_xy}{Suspected true X-Y effect. Default = \code{0}}
 
-\item{rsq_xs_range}{Range of rsq_xs values to enumerate over. Default = c(0,1)}
+\item{rsq_xs_range}{Range of rsq_xs values to enumerate over. Default = \code{c(0,1)}}
 
-\item{rsq_ys_range}{Range of rsq_ys values to enumerate over. Default = c(0,1)}
+\item{rsq_ys_range}{Range of rsq_ys values to enumerate over. Default = \code{c(0,1)}}
 
-\item{gran}{Granularity of ranges. Default = 30}
+\item{gran}{Granularity of ranges. Default = \code{30}}
 }
 \value{
 ggplot of simulations
