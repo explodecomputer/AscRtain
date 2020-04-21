@@ -26,6 +26,5 @@ Imports:
 	pwr,
 	knitr,
   plot3D,
-  magrittr,
-  plot3Drgl
+  magrittr
 VignetteBuilder: knitr

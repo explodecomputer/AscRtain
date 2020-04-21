@@ -98,7 +98,7 @@ x$scatter3d()
 
 Can try to do this in 3D also:
 
-```{r, webgl=TRUE}
+```r
 plot3Drgl::plotrgl()
 ```
 
