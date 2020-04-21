@@ -15,7 +15,7 @@ This will be accompanied by an AscRtain.shiny app for pedagogical purposes
 
 ## Installation
 
-```
+```r
 devtools::install_github("explodecomputer/AscRtain")
 ```
 

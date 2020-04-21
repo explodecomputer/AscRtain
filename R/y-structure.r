@@ -8,12 +8,13 @@
 #' @param b_xy Causal effect of X on Y
 #' @param rsq_xs Variance explained by X on collider variable S
 #' @param rsq_ys Variance explained by Y on collider variable S
-#' @param vx Variance of X. Default = 1.
-#' @param vy Variance of Y. Default = 1.
-#' @param vs Variance of S. Default = 1.
-#' @param sig.level Alpha threshold for power calculation. Default = 5e-8
+#' @param vx Variance of X. Default = `1`.
+#' @param vy Variance of Y. Default = `1`.
+#' @param vs Variance of S. Default = `1`.
+#' @param sig.level Alpha threshold for power calculation. Default = `5e-8`
 #'
 #' @export
+#' @importFrom stats pnorm power.anova.test
 #' @return List of simulation results
 simulate_y_structure <- function(n, prop, or_sz, b_xy, rsq_xs, rsq_ys, vx=1, vy=1, vs=1, sig.level=5e-8)
 {
@@ -48,11 +49,11 @@ simulate_y_structure <- function(n, prop, or_sz, b_xy, rsq_xs, rsq_ys, vx=1, vy=
 #'
 #' @param prop Proportion of population included in sample
 #' @param b_xy_thresh Target b_xy association - e.g. what value of b_xy are you suspicious could be due to ascertainment on a collider
-#' @param or_sz_range Range of OR_sz values to enumerate over. Default = c(1,100)
-#' @param b_xy Suspected true X-Y effect. Default = 0
-#' @param rsq_xs_range Range of rsq_xs values to enumerate over. Default = c(0,1)
-#' @param rsq_ys_range  Range of rsq_ys values to enumerate over. Default = c(0,1)
-#' @param gran Granularity of ranges. Default = 30
+#' @param or_sz_range Range of OR_sz values to enumerate over. Default = `c(1,100)`
+#' @param b_xy Suspected true X-Y effect. Default = `0`
+#' @param rsq_xs_range Range of rsq_xs values to enumerate over. Default = `c(0,1)`
+#' @param rsq_ys_range  Range of rsq_ys values to enumerate over. Default = `c(0,1)`
+#' @param gran Granularity of ranges. Default = `30`
 #'
 #' @export
 #' @return ggplot of simulations
@@ -90,13 +91,14 @@ plot_simulate_y_structure <- function(prop, b_xy_thresh, or_sz_range=c(1,100), b
 #'
 #' @param prop Proportion of population included in sample
 #' @param b_xy_thresh Target b_xy association - e.g. what value of b_xy are you suspicious could be due to ascertainment on a collider
-#' @param b_xy Suspected true X-Y effect. Default = 0
-#' @param rsq_xs_range Range of rsq_xs values to enumerate over. Default = c(0,1)
-#' @param rsq_ys_range  Range of rsq_ys values to enumerate over. Default = c(0,1)
-#' @param gran Granularity of ranges. Default = 101
+#' @param b_xy Suspected true X-Y effect. Default = `0`
+#' @param rsq_xs_range Range of rsq_xs values to enumerate over. Default = `c(0,1)`
+#' @param rsq_ys_range  Range of rsq_ys values to enumerate over. Default = `c(0,1)`
+#' @param gran Granularity of ranges. Default = `101`
 #' @param max_or_sz Maximum OR_sz to allow in optimisation.
 #'
 #' @export
+#' @importFrom stats optimize
 #' @return ggplot of simulations
 plot_simulate_y_structure_optim <- function(prop, b_xy_thresh, b_xy=0, rsq_xs_range=c(0,1), rsq_ys_range=c(0,1), gran=101, max_or_sz=20)
 {
@@ -128,10 +130,3 @@ plot_simulate_y_structure_optim <- function(prop, b_xy_thresh, b_xy=0, rsq_xs_ra
     ggplot2::labs(x="Variance in S explained by X", y="Variance in S explained by Y", colour="OR of S\non inclusion")
   g
 }
-
-
-
-
-
-
-
