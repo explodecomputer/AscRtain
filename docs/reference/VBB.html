@@ -10,27 +10,23 @@
 
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
-
-<!-- bootstrap-toc -->
-<link rel="stylesheet" href="../bootstrap-toc.css">
-<script src="../bootstrap-toc.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -42,6 +38,7 @@
 <meta property="og:title" content="V-structure bias, binary exposure and binary outcome. — VBB" />
 <meta property="og:description" content="V-structure bias, binary exposure and binary outcome.
 V-structure bias, binary exposure and binary outcome." />
+<meta name="twitter:card" content="summary" />
 
 
 
@@ -59,7 +56,7 @@ V-structure bias, binary exposure and binary outcome." />
 
   </head>
 
-  <body data-spy="scroll" data-target="#toc">
+  <body>
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -109,7 +106,7 @@ V-structure bias, binary exposure and binary outcome." />
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/explodecomputer/AscRtain/">
+  <a href="https://github.com/explodecomputer/AscRtain">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -147,7 +144,7 @@ Where A is a binary exposure, Y is a binary outcome and S indicates whether an i
 \(P(S = 1)\) is the proportion of the population that is present in the data.</p>
     <h2 class="hasAnchor" id="public-fields"><a class="anchor" href="#public-fields"></a>Public fields</h2>
 
-    <p><div class="r6-fields"></p><dl'>
+    <p><div class="r6-fields"></p><dl class='dl-horizontal'>
 <dt><code>param</code></dt><dd><p>Dataframe of parameter range list</p></dd>
 
 </dl><p></div></p>
@@ -168,10 +165,10 @@ Where A is a binary exposure, Y is a binary outcome and S indicates whether an i
 <p><hr>
 <a id="method-or_calc"></a></p><h3>Method <code>or_calc()</code></h3>
 <p>Calculate the expected OR under collider bias when null hypothoses of OR = 1 is true:</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>VBB</span>$<span class='fu'>or_calc</span>(<span class='no'>b0</span>, <span class='no'>ba</span>, <span class='no'>by</span>, <span class='no'>bay</span>)</pre><p></div></p>
+<p><div class="r"></p><pre>VBB$or_calc(b0, ba, by, bay)</pre><p></div></p>
 
 <h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<p><div class="arguments"></p><dl class='dl-horizontal'>
 <dt><code>b0</code></dt><dd><p>Baseline probability of being selected</p></dd>
 
 <dt><code>ba</code></dt><dd><p>Effect of A on being selected</p></dd>
@@ -186,10 +183,10 @@ Where A is a binary exposure, Y is a binary outcome and S indicates whether an i
 <p><hr>
 <a id="method-ps_calc"></a></p><h3>Method <code>ps_calc()</code></h3>
 <p>Calculate the proportion of samples included in the model for a given set of parameters</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>VBB</span>$<span class='fu'>ps_calc</span>(<span class='no'>b0</span>, <span class='no'>ba</span>, <span class='no'>by</span>, <span class='no'>bay</span>, <span class='no'>pA</span>, <span class='no'>pY</span>, <span class='no'>pAY</span>)</pre><p></div></p>
+<p><div class="r"></p><pre>VBB$ps_calc(b0, ba, by, bay, pA, pY, pAY)</pre><p></div></p>
 
 <h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<p><div class="arguments"></p><dl class='dl-horizontal'>
 <dt><code>b0</code></dt><dd><p>Baseline probability of being selected</p></dd>
 
 <dt><code>ba</code></dt><dd><p>Effect of A on being selected</p></dd>
@@ -210,22 +207,22 @@ Where A is a binary exposure, Y is a binary outcome and S indicates whether an i
 <p><hr>
 <a id="method-parameter_space"></a></p><h3>Method <code>parameter_space()</code></h3>
 <p>Specify a set of parameters for the structural equation, and calculate the set of odds ratios that would be obtained, assuming the odds ratio of A on Y in the total population is 1.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>VBB</span>$<span class='fu'>parameter_space</span>(
-  <span class='no'>target_or</span>,
-  <span class='no'>pS</span>,
-  <span class='no'>pA</span>,
-  <span class='no'>pY</span>,
-  <span class='no'>pAY</span>,
-  <span class='no'>b0_range</span>,
-  <span class='no'>ba_range</span>,
-  <span class='no'>by_range</span>,
-  <span class='no'>bay_range</span>,
-  <span class='kw'>granularity</span> <span class='kw'>=</span> <span class='fl'>100</span>,
-  <span class='kw'>pS_tol</span> <span class='kw'>=</span> <span class='fl'>0.0025</span>
+<p><div class="r"></p><pre>VBB$parameter_space(
+  target_or,
+  pS,
+  pA,
+  pY,
+  pAY,
+  b0_range,
+  ba_range,
+  by_range,
+  bay_range,
+  granularity = 100,
+  pS_tol = 0.0025
 )</pre><p></div></p>
 
 <h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<p><div class="arguments"></p><dl class='dl-horizontal'>
 <dt><code>target_or</code></dt><dd><p>Target odds ratio. e.g. in an observational study this OR is observed, and the researcher seeks to find parameter ranges that could explain it</p></dd>
 
 <dt><code>pS</code></dt><dd><p>Proportion of the population present in the sample</p></dd>
@@ -254,20 +251,20 @@ Where A is a binary exposure, Y is a binary outcome and S indicates whether an i
 <p><hr>
 <a id="method-scatter3d"></a></p><h3>Method <code>scatter3d()</code></h3>
 <p>3D scatterplot of output from <code>parameter_space</code> function. See <code><a href='https://rdrr.io/pkg/plot3D/man/scatter.html'>plot3D::scatter3D</a></code> for info on parameters</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>VBB</span>$<span class='fu'>scatter3d</span>(
-  <span class='kw'>ticktype</span> <span class='kw'>=</span> <span class='st'>"detailed"</span>,
-  <span class='kw'>theta</span> <span class='kw'>=</span> <span class='fl'>130</span>,
-  <span class='kw'>phi</span> <span class='kw'>=</span> <span class='fl'>0</span>,
-  <span class='kw'>bty</span> <span class='kw'>=</span> <span class='st'>"g"</span>,
-  <span class='kw'>xlab</span> <span class='kw'>=</span> <span class='st'>"ba"</span>,
-  <span class='kw'>ylab</span> <span class='kw'>=</span> <span class='st'>"by"</span>,
-  <span class='kw'>zlab</span> <span class='kw'>=</span> <span class='st'>"b0"</span>,
-  <span class='kw'>clab</span> <span class='kw'>=</span> <span class='st'>"OR"</span>,
-  <span class='no'>...</span>
+<p><div class="r"></p><pre>VBB$scatter3d(
+  ticktype = "detailed",
+  theta = 130,
+  phi = 0,
+  bty = "g",
+  xlab = "ba",
+  ylab = "by",
+  zlab = "b0",
+  clab = "OR",
+  ...
 )</pre><p></div></p>
 
 <h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<p><div class="arguments"></p><dl class='dl-horizontal'>
 <dt><code>ticktype</code></dt><dd><p>Default=<code>"detailed"</code></p></dd>
 
 <dt><code>theta</code></dt><dd><p>Default=<code>130</code></p></dd>
@@ -292,15 +289,15 @@ Where A is a binary exposure, Y is a binary outcome and S indicates whether an i
 <p><hr>
 <a id="method-scatter"></a></p><h3>Method <code>scatter()</code></h3>
 <p>Simple scatterplot of output from parameter_space function. Plotted are the parameter values of <code>b0</code>, <code>ba</code> and <code>by</code> that can give rise to an OR \(\ge\) <code>target_or</code></p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>VBB</span>$<span class='fu'>scatter</span>()</pre><p></div></p>
+<p><div class="r"></p><pre>VBB$scatter()</pre><p></div></p>
 
 <p><hr>
 <a id="method-histogram"></a></p><h3>Method <code>histogram()</code></h3>
 <p>Histogram of odds ratios across the range of parameter values</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>VBB</span>$<span class='fu'>histogram</span>(<span class='kw'>bins</span> <span class='kw'>=</span> <span class='fl'>30</span>)</pre><p></div></p>
+<p><div class="r"></p><pre>VBB$histogram(bins = 30)</pre><p></div></p>
 
 <h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<p><div class="arguments"></p><dl class='dl-horizontal'>
 <dt><code>bins</code></dt><dd><p>How many bins to split histogram. Default=<code>30</code></p></dd>
 
 </dl><p></div></p>
@@ -309,10 +306,10 @@ Where A is a binary exposure, Y is a binary outcome and S indicates whether an i
 <p><hr>
 <a id="method-clone"></a></p><h3>Method <code>clone()</code></h3>
 <p>The objects of this class are cloneable with this method.</p><h3>Usage</h3>
-<p><div class="r"></p><pre><span class='no'>VBB</span>$<span class='fu'>clone</span>(<span class='kw'>deep</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre><p></div></p>
+<p><div class="r"></p><pre>VBB$clone(deep = FALSE)</pre><p></div></p>
 
 <h3>Arguments</h3>
-<p><div class="arguments"></p><dl'>
+<p><div class="arguments"></p><dl class='dl-horizontal'>
 <dt><code>deep</code></dt><dd><p>Whether to make a deep clone.</p></dd>
 
 </dl><p></div></p>
@@ -320,10 +317,14 @@ Where A is a binary exposure, Y is a binary outcome and S indicates whether an i
 
 
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-    <nav id="toc" data-toggle="toc" class="sticky-top">
-      <h2 data-toc-skip>Contents</h2>
-    </nav>
+  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+    <h2>Contents</h2>
+    <ul class="nav nav-pills nav-stacked">
+      <li><a href="#details">Details</a></li>
+      <li><a href="#public-fields">Public fields</a></li>
+      <li><a href="#methods">Methods</a></li>
+    </ul>
+
   </div>
 </div>
 
@@ -334,7 +335,7 @@ Where A is a binary exposure, Y is a binary outcome and S indicates whether an i
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

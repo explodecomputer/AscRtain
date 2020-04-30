@@ -164,7 +164,7 @@ We can also ask - is our association actually more likely to be attenuated to OR
 ```{r}
 x <- VBB$new()
 x$parameter_space(	
-	target_or=2, 
+	target_or=1.95, 
 	pS=0.035, 
 	pA=0.078,
 	pY=0.1,
@@ -190,15 +190,17 @@ x1$parameter_space(
 	granularity=200
 )
 
-x$param %>% ggplot2::ggplot(., aes(x = bay, y = by)) +
+p <- x$param %>% ggplot2::ggplot(., aes(x = bay, y = by)) +
   ggplot2::geom_point(aes(colour = b0)) +
   ggplot2::labs(colour = expression(paste("Baseline inc. prob. ", (beta[0]), " OR > 2"))) +
+  ggplot2::scale_colour_gradient(low="white", high="blue") +
   ggnewscale::new_scale_colour() +
   ggplot2::geom_point(data = x1$param, aes(colour = b0)) +
   ggplot2::scale_colour_gradient(low = "white", high = "red") +
   ggplot2::labs(x = expression(paste("Effect of ACE-i AND Covid-19 on inclusion probability (", beta[AY],")")), 
                 y = expression(paste("Effect of Covid-19 on inclusion probability (", beta[Y], ")")), 
                 colour = expression(paste("Baseline inc. prob. ", (beta[0]), " OR < 0.8")))
+p
 ```
 
 So it could go either way really, a lot of the figure is shaded in both blue and red, and we don't know what the actual selection based on covid is. This indicates that it is really not reliable to be making claims about causality from this type of sampling.
@@ -332,4 +334,104 @@ probs4 <- model.matrix(~ A + Y + A:Y, subset=S==1) %*% coef3 %>% plogis
 summary(glm(Y ~ A, family="binomial", subset=S==1, weight=1/probs4))$coef[2] %>% exp
 summary(glm(Y ~ A, family="binomial", subset=S==1, weight=1/probs3))$coef[2] %>% exp
 summary(glm(Y ~ A, family="binomial", subset=S==1, weight=1/probs2))$coef[2] %>% exp
+```
+
+
+## Example for background paper
+
+
+```{r}
+library(AscRtain)
+load_all()
+x <- VBB$new()
+x$parameter_space(	
+	target_or=5, 
+	pS=0.035, 
+	pA=0.078,
+	pY=0.1,
+	pAY=0.078 * 0.1,
+	b0_range=c(0,0.1), 
+	ba_range=c(-0.015, 0.015), 
+	by_range=c(-0.1,0.1), 
+	bay_range=c(0,0), 
+	granularity=200
+)
+
+x$scatter3d()
+
+x1 <- VBB$new()
+x1$parameter_space(	
+	target_or=1/5, 
+	pS=0.035, 
+	pA=0.078,
+	pY=0.1,
+	pAY=0.078 * 0.1,
+	b0_range=c(0,0.1), 
+	ba_range=c(-0.015, 0.015), 
+	by_range=c(-0.1,0.1), 
+	bay_range=c(0,0), 
+	granularity=200
+)
+x1$scatter3d()
+
+
+p <- dplyr::bind_rows(dplyr::mutate(x$param, or=5), dplyr::mutate(x1$param, or=1/5))
+dim(p)
+
+library(ggplot2)
+ggplot(p, aes(x = ba, y = by)) +
+  geom_point() +
+  facet_grid(or ~ .) +
+  xlim(c(-0.015, 0.015)) +
+  ylim(c(-0.1,0.1))
+
+   +
+  labs(colour = expression(paste("Baseline inc. prob. ", (beta[0]), " OR > 2"))) +
+  scale_colour_gradient(low="white", high="blue") +
+  ggnewscale::new_scale_colour() +
+  geom_point(data = x1$param, aes(colour = b0)) +
+  scale_colour_gradient(low = "white", high = "red") +
+  labs(x = expression(paste("Effect of ACE-i AND Covid-19 on inclusion probability (", beta[AY],")")), 
+                y = expression(paste("Effect of Covid-19 on inclusion probability (", beta[Y], ")")), 
+                colour = expression(paste("Baseline inc. prob. ", (beta[0]), " OR < 0.8")))
+p
+
+x1 <- VBB$new()
+x1$parameter_space(	
+	target_or=0.8, 
+	pS=0.035, 
+	pA=0.078,
+	pY=0.1,
+	pAY=0.078 * 0.1,
+	b0_range=c(0,0.1), 
+	ba_range=c(-0.015, -0.015), 
+	by_range=c(-0.1,0.1), 
+	bay_range=c(-0.1,0.1), 
+	granularity=200
+)
+library(ggplot2)
+p <- x$param %>% ggplot2::ggplot(., aes(x = bay, y = by)) +
+  ggplot2::geom_point(aes(colour = b0)) +
+  ggplot2::labs(colour = expression(paste("Baseline inc. prob. ", (beta[0]), " OR > 2"))) +
+  ggplot2::scale_colour_gradient(low="white", high="blue") +
+  ggnewscale::new_scale_colour() +
+  ggplot2::geom_point(data = x1$param, ggplot2::aes(colour = b0)) +
+  ggplot2::scale_colour_gradient(low = "white", high = "red") +
+  ggplot2::labs(x = expression(paste("Effect of ACE-i AND Covid-19 on inclusion probability (", beta[AY],")")), 
+                y = expression(paste("Effect of Covid-19 on inclusion probability (", beta[Y], ")")), 
+                colour = expression(paste("Baseline inc. prob. ", (beta[0]), " OR < 0.8")))
+p
+
+
+plot3D::scatter3D(x=x$param$ba, y=x$param$by, z=x$param$bay, colvar=x$param$b0)
+
+library(plot3Drgl)
+plotrgl()
+
+	, ticktype = ticktype, theta=theta, phi=phi, bty=bty, xlab=xlab, ylab=ylab, zlab=zlab, clab=clab, ...)
+
+
+
+
+
 ```

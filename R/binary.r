@@ -11,6 +11,7 @@ VBB <- R6Class("VBB", list(
 
 	#' @field param Dataframe of parameter range list
 	param = NULL,
+	details = list(),
 
 	#' @description
 	#' Calculate the expected OR under collider bias when null hypothoses of OR = 1 is true:
@@ -68,11 +69,13 @@ VBB <- R6Class("VBB", list(
 			bay = seq(bay_range[1], bay_range[2], length.out=granularity) %>% unique()
 		)
 		message(nrow(param), " parameter combinations")
+		self$details$parameter_combinations <- nrow(param)
 		param <- param %>%
 		dplyr::mutate(ps1 = self$ps_calc(b0=b0, ba=ba, pA=pA, by=by, pY=pY, bay=bay, pAY=pAY)) %>%
 		dplyr::filter(ps1 >= pS - pS_tol & ps1 <= pS + pS_tol & b0 + by + ba + bay > 0) %>%
 		dplyr::mutate(or = self$or_calc(b0=b0, ba=ba, by=by, bay=bay))
 		message(nrow(param), " within pS_tol")
+		self$details$within_ps_told <- nrow(param)
 		if(target_or >= 1)
 		{
 			param <- subset(param, or >= target_or & or < 50)
@@ -80,6 +83,7 @@ VBB <- R6Class("VBB", list(
 			param <- subset(param, or <= target_or & or > 0)
 		}
 		message(nrow(param), " beyond OR threshold")
+		self$details$beyond_or <- nrow(param)
 		self$param <- dplyr::as_tibble(param)
 	},
 
@@ -95,9 +99,9 @@ VBB <- R6Class("VBB", list(
 	#' @param clab Default=`"OR"`
 	#' @param ... Further parameters to be passed to [`plot3D::scatter3D`]
 	#' @return Scatterplot
-	scatter3d = function(ticktype="detailed", theta=130, phi=0, bty="g", xlab="ba", ylab="by", zlab="b0", clab="OR", ...)
+	scatter3d = function(ticktype="detailed", theta=130, phi=0, bty="g", xlab=expression(beta[A]), ylab=expression(beta[Y]), zlab=expression(beta[AY]), clab=expression(beta[0]), ...)
 	{
-		plot3D::scatter3D(self$param$ba, self$param$by, self$param$b0, colvar=self$param$or, ticktype = ticktype, theta=theta, phi=phi, bty=bty, xlab=xlab, ylab=ylab, zlab=zlab, clab=clab, ...)
+		plot3D::scatter3D(x=self$param$ba, y=self$param$by, z=self$param$bay, colvar=self$param$b0, ticktype = ticktype, theta=theta, phi=phi, bty=bty, xlab=xlab, ylab=ylab, zlab=zlab, clab=clab, ...)
 	},
 
 	#' @description
@@ -106,9 +110,9 @@ VBB <- R6Class("VBB", list(
 	{
 		ggplot2::ggplot(self$param, ggplot2::aes(x=ba, y=by)) +
 		ggplot2::geom_point(ggplot2::aes(colour=b0)) + 
-    ggplot2::xlab(expression(beta[A])) + 
-    ggplot2::ylab(expression(beta[Y])) + 
-    ggplot2::labs(colour = expression(beta[0]))
+	    ggplot2::xlab(expression(beta[A])) + 
+    	ggplot2::ylab(expression(beta[Y])) + 
+    	ggplot2::labs(colour = expression(beta[0]))
 	},
 
 	#' @description
@@ -121,7 +125,7 @@ VBB <- R6Class("VBB", list(
 		ggplot2::ggplot(self$param, ggplot2::aes(x=or)) +
 		ggplot2::geom_histogram(bins=bins) +
 		ggplot2::scale_x_log10() + 
-	  ggplot2::xlab("OR")
+		ggplot2::xlab("OR")
 	}
 
 ))
